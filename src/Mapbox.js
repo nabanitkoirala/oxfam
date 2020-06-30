@@ -84,7 +84,7 @@ function Map() {
     return (
 
         <div>
-            <ReactMapGl className="map-react" {...viewport} mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN} mapStyle='mapbox://styles/mapbox/light-v10'
+            <ReactMapGl className="map-react" {...viewport} mapboxApiAccessToken='pk.eyJ1IjoibmFiYW5pdCIsImEiOiJja2E4MXR3NDkwNGMxMzJzOWF4Zzk1cmRxIn0.PlAUDME-BUb9gV-DCutXzw' mapStyle='mapbox://styles/mapbox/light-v10'
                 onViewportChange={(viewport) => setviewPort(viewport)} maxZoom={20} ref={mapRef}>
                 {FinalRender}
 
