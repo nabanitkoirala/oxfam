@@ -64,18 +64,16 @@ function Map() {
             if (isCluster) {
                 return (
                     <Marker key={cluster.id} latitude={latitude} longitude={longitude}>
-                        <div className="cluster-marker" style={{
-                            width: `${10 + (pointCount / points.length) * 20}px`,
-                            height: `${10 + (pointCount / points.length) * 20}px`
-                        }}>
-                            <button type="button" className="btn btn-primary btn-circle btn-sm">{pointCount}</button>
+                        <div>
+                            <button type="button" className="btn btn-primary btn-circle btn-md" >{pointCount}</button>
+
                         </div>
                     </Marker>
                 )
             }
             return (
                 <Marker key={cluster.properties.crimeId} latitude={latitude} longitude={longitude}>
-                    <p>Case</p>
+                    <button type="button" class="btn btn-warning btn-circle btn-sm">Y</button>
                 </Marker>
             )
         })
