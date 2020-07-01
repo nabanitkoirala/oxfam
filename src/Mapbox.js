@@ -32,11 +32,11 @@ function Map() {
     }, [])
     console.log(isLoading);
     console.log(Covid);
-    {/*Data from an external/remote source will most likely need to be 
-massaged into the format required by the supercluster library.
-We must produce an array of GeoJSON Feature objects, with the 
-geometry of each object being a GeoJSON Point.
-*/}
+    //Data from an external/remote source will most likely need to be 
+    //massaged into the format required by the supercluster library.
+    //We must produce an array of GeoJSON Feature objects, with the 
+    //geometry of each object being a GeoJSON Point.
+
     const points = Covid.map(item => ({
         type: "Feature",
         properties: {
@@ -48,12 +48,12 @@ geometry of each object being a GeoJSON Point.
 
     }))
     console.log("points", points);
-    {/**For supercluster to return the clusters based on the array of points we created below, we need to provide it with two additional pieces of information:
+    //For supercluster to return the clusters based on the array of points we created below, we need to provide it with two additional pieces of information:
 
-The map bounds: [westLng, southLat, eastLng, northLat]
-The map zoom: In Mapbox this will come from our viewport.zoom state
-The bounds can be gathered by accessing the mapRef.current property that we set up above
- */}
+    //The map bounds: [westLng, southLat, eastLng, northLat]
+    //The map zoom: In Mapbox this will come from our viewport.zoom state
+    //The bounds can be gathered by accessing the mapRef.current property that we set up above
+
 
     const bounds = mapRef.current
         ? mapRef.current
@@ -63,9 +63,9 @@ The bounds can be gathered by accessing the mapRef.current property that we set 
             .flat()
         : null;
     console.log("bounds", bounds);
-    {/**With our points in the correct order, and with the bounds and zoom accessible, 
-    it's time to retrieve the clusters. This will use the useSupercluster hook provided by the use-supercluster package.
-    It returns  through a destructured object an array of clusters and the supercluster instance variable */}
+    //With our points in the correct order, and with the bounds and zoom accessible, 
+    //it's time to retrieve the clusters. This will use the useSupercluster hook provided by the use-supercluster package.
+    //It returns  through a destructured object an array of clusters and the supercluster instance variable */}
 
     const { clusters, supercluster } = useSupercluster({
         points,
@@ -84,19 +84,19 @@ The bounds can be gathered by accessing the mapRef.current property that we set 
                         <div>
                             <button type="button" className="btn btn-primary btn-circle btn-md"
                                 onClick={() => {
-                                    {/**
-                                    We can always zoom into the map ourselves, but supercluster provides a function
-                                     called getClusterExpansionZoom, which when passed a cluster ID, it will return us
-                                      which zoom level we need to change the map to in order for the cluster to be broken
-                                       down into additional smaller clusters, or individual points.
-                                    */}
+
+                                    //We can always zoom into the map ourselves, but supercluster provides a function
+                                    //called getClusterExpansionZoom, which when passed a cluster ID, it will return us
+                                    //which zoom level we need to change the map to in order for the cluster to be broken
+                                    //down into additional smaller clusters, or individual points.
+
                                     const expansionZoom = Math.min(supercluster.getClusterExpansionZoom(cluster.id), 20)
-                                    {/**
-                                    With the next zoom level provided to us by supercluster, we could simple update our Mapbox
-                                     viewport state, but it wouldn't be a smooth transition. react-map-gl provides a class called
-                                      FlyToInterpolator which animates the map to the new zoom and lat/lon rather than the change 
-                                      being instant.
-                                    */}
+
+                                    //With the next zoom level provided to us by supercluster, we could simple update our Mapbox
+                                    //viewport state, but it wouldn't be a smooth transition. react-map-gl provides a class called
+                                    //FlyToInterpolator which animates the map to the new zoom and lat/lon rather than the change 
+                                    //being instant.
+
                                     setviewPort({
                                         ...viewport,
                                         latitude,
