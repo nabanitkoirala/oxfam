@@ -14,13 +14,14 @@
     "react-loader": "^2.4.7",
     "react-map-gl": "^5.2.7",
     "react-mapbox-gl-cluster": "^1.9.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "supercluster": "^7.1.0",
     "use-supercluster": "^0.2.8"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI= react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

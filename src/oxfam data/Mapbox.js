@@ -22,9 +22,10 @@ function Map() {
 
     useEffect(() => {
         //fetching data from api 
-        //httpBrowsing.get('/form', true)
+
         //Axios.get('https://covid19wst.yilab.org.np/api/v1/form', { headers: { "Authorization": 'Token 44e2b23387334bcca310175463de768ee5c41743' } })
         Axios.get('https://bipad.yilab.org.np/api/v1/covid19-case/')
+            //httpBrowsing.get('/form', true)
             .then(res => {
                 setCovid(res.data.results)
                 setIsloading(false)
@@ -107,7 +108,7 @@ function Map() {
                                         latitude,
                                         longitude,
                                         zoom: expansionZoom,
-                                        transitionInterpolator: new FlyToInterpolator({ speed: 2 }),
+                                        transitionInterpolator: new FlyToInterpolator({ speed: 0.5 }),
                                         transitionDuration: 'auto'
 
 

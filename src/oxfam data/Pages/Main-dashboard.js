@@ -1,106 +1,133 @@
 import React from 'react';
 import Header from '../View-pannel/Header';
-import Sidebar from '../View-pannel/Sidebar';
+import { Link } from 'react-router-dom';
 import Footer from '../View-pannel/Footer';
 import Map from './../Mapbox';
+import './../Mapbox.css';
 
 export default function Dashboard() {
     return (
         <div>
             <Header />
-            <Sidebar />
+            {/* Main Sidebar Container */}
+            <aside className="main-sidebar sidebar-dark-primary elevation-4">
+                {/* Brand Logo */}
+                <a href="index3.html" className="brand-link">
+                    <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
+                    <span className="brand-text font-weight-light">Oxfam</span>
+                </a>
+                {/* Sidebar */}
+                <div className="sidebar">
+                    {/* Sidebar user panel (optional) */}
+                    <div className="user-panel mt-3 pb-3 mb-3 d-flex">
+
+                        <div className="info">
+                            <a href="#" className="d-block">Field Research Data</a>
+                        </div>
+                    </div>
+                    {/* Sidebar Menu */}
+                    <nav className="mt-2">
+                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            {/* Add icons to the links using the .nav-icon class
+         with font-awesome or any other icon font library */}
+                            <li className="nav-item has-treeview menu-open">
+                                <a href="#" className="nav-link active">
+                                    <i className="nav-icon fas fa-tachometer-alt" />
+                                    <p>
+                                        Province Level Data
+                <i className="right fas fa-angle-left" />
+                                    </p>
+                                </a>
+                                <ul className="nav nav-treeview">
+                                    <li className="nav-item">
+                                        <Link to="/overall-data" className="nav-link active">
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Overall Data</p>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to="/province1" className="nav-link">
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Province 1</p>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to="/province2" href="./index2.html" className="nav-link">
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Province 2</p>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to="/bagmati" className="nav-link">
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Bagmati</p>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to="/gandaki" className="nav-link">
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Gandaki</p>
+                                        </Link >
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to="/province5" className="nav-link">
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Province 5</p>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to="/karnali" href="./index2.html" className="nav-link">
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Karnali</p>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to="/sudurpaschim" href="./index2.html" className="nav-link">
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Sudurpaschim</p>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    {/* /.sidebar-menu */}
+                </div>
+                {/* /.sidebar */}
+            </aside>
+
+            {/* Control Sidebar */}
+            <aside className="control-sidebar control-sidebar-dark">
+                {/* Control sidebar content goes here */}
+            </aside>
+            {/* /.control-sidebar */}
             {/* Content Wrapper. Contains page content */}
             <div className="content-wrapper">
                 {/* Content Header (Page header) */}
                 <div className="content-header">
                     <div className="container-fluid">
-                        <div className="row mb-2">
-                            <div className="col-sm-6">
-                                <h1 className="m-0 text-dark">Dashboard v2</h1>
-                            </div>{/* /.col */}
-
-                        </div>{/* /.row */}
                     </div>{/* /.container-fluid */}
                 </div>
                 {/* /.content-header */}
                 {/* Main content */}
                 <section className="content">
                     <div className="container-fluid">
-                        {/* Info boxes */}
-                        <div className="row">
-                            <div className="col-12 col-sm-6 col-md-3">
-                                <div className="info-box">
-                                    <span className="info-box-icon bg-info elevation-1"><i className="fas fa-cog" /></span>
-                                    <div className="info-box-content">
-                                        <span className="info-box-text">CPU Traffic</span>
-                                        <span className="info-box-number">
-                                            10
-                <small>%</small>
-                                        </span>
-                                    </div>
-                                    {/* /.info-box-content */}
-                                </div>
-                                {/* /.info-box */}
-                            </div>
-                            {/* /.col */}
-                            <div className="col-12 col-sm-6 col-md-3">
-                                <div className="info-box mb-3">
-                                    <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-thumbs-up" /></span>
-                                    <div className="info-box-content">
-                                        <span className="info-box-text">Likes</span>
-                                        <span className="info-box-number">41,410</span>
-                                    </div>
-                                    {/* /.info-box-content */}
-                                </div>
-                                {/* /.info-box */}
-                            </div>
-                            {/* /.col */}
-                            {/* fix for small devices only */}
-                            <div className="clearfix hidden-md-up" />
-                            <div className="col-12 col-sm-6 col-md-3">
-                                <div className="info-box mb-3">
-                                    <span className="info-box-icon bg-success elevation-1"><i className="fas fa-shopping-cart" /></span>
-                                    <div className="info-box-content">
-                                        <span className="info-box-text">Sales</span>
-                                        <span className="info-box-number">760</span>
-                                    </div>
-                                    {/* /.info-box-content */}
-                                </div>
-                                {/* /.info-box */}
-                            </div>
-                            {/* /.col */}
-                            <div className="col-12 col-sm-6 col-md-3">
-                                <div className="info-box mb-3">
-                                    <span className="info-box-icon bg-warning elevation-1"><i className="fas fa-users" /></span>
-                                    <div className="info-box-content">
-                                        <span className="info-box-text">New Members</span>
-                                        <span className="info-box-number">2,000</span>
-                                    </div>
-                                    {/* /.info-box-content */}
-                                </div>
-                                {/* /.info-box */}
-                            </div>
-                            {/* /.col */}
-                        </div>
-
                         <div className="row">
                             {/* Left col */}
+
                             <div className="col-md-8">
                                 {/* MAP & BOX PANE */}
                                 <div className="card">
                                     <div className="card-header">
                                         <h3 className="card-title">Overall Country Data</h3>
-
-
                                     </div>
                                     {/* /.card-header */}
                                     <div className="card-body p-0">
                                         <div className="d-md-flex">
                                             <div className="p-1 flex-fill" style={{ overflow: 'hidden' }}>
                                                 {/* Map will be created here */}
-                                                <div id="world-map-markers" style={{ height: 325, overflow: 'hidden' }}>
+                                                <div id="world-map-markers" style={{ height: 400, overflow: 'hidden' }}>
                                                     <div className="map" />
-
                                                     <Map />
                                                 </div>
                                             </div>
@@ -109,63 +136,43 @@ export default function Dashboard() {
                                     </div>
                                     {/* /.card-body */}
                                 </div>
-                                {/* /.card */}
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        {/* DIRECT CHAT */}
-                                        <div className="card direct-chat direct-chat-warning">
-
-
-
-                                        </div>
-                                        {/*/.direct-chat */}
-                                    </div>
-
-                                </div>
 
 
                             </div>
-                            {/* /.col */}
                             <div className="col-md-4">
-                                {/* Info Boxes Style 2 */}
-                                <div className="info-box mb-3 bg-warning">
-                                    <span className="info-box-icon"><i className="fas fa-tag" /></span>
-                                    <div className="info-box-content">
-                                        <span className="info-box-text">Inventory</span>
-                                        <span className="info-box-number">5,200</span>
+                                <div className="card">
+                                    <div className="card-header">
+                                        <h3 className="card-title">
+                                            <i className="fas fa-text-width" />
+        Overall Country Data
+      </h3>
                                     </div>
-                                    {/* /.info-box-content */}
-                                </div>
-                                {/* /.info-box */}
-                                <div className="info-box mb-3 bg-success">
-                                    <span className="info-box-icon"><i className="far fa-heart" /></span>
-                                    <div className="info-box-content">
-                                        <span className="info-box-text">Mentions</span>
-                                        <span className="info-box-number">92,050</span>
-                                    </div>
-                                    {/* /.info-box-content */}
-                                </div>
-                                {/* /.info-box */}
-                                <div className="info-box mb-3 bg-danger">
-                                    <span className="info-box-icon"><i className="fas fa-cloud-download-alt" /></span>
-                                    <div className="info-box-content">
-                                        <span className="info-box-text">Downloads</span>
-                                        <span className="info-box-number">114,381</span>
-                                    </div>
-                                    {/* /.info-box-content */}
-                                </div>
-                                {/* /.info-box */}
-                                <div className="info-box mb-3 bg-info">
-                                    <span className="info-box-icon"><i className="far fa-comment" /></span>
-                                    <div className="info-box-content">
-                                        <span className="info-box-text">Direct Messages</span>
-                                        <span className="info-box-number">163,921</span>
-                                    </div>
-                                    {/* /.info-box-content */}
-                                </div>
+                                    {/* /.card-header */}
+                                    <div className="card-body">
+                                        <ul>
+                                            <li><b>Water Resource Available    :5</b></li>
+                                            <li><b>Water Resource Unavailable:3</b></li>
+                                            <li><b>Toilet Avaliable:300</b></li>
+                                            <li><b>Toilet Unavailable:25</b></li>
+                                            <li><b>Wash Facility available:25</b></li>
+                                            <li><b>Wash Facility unavailable:25</b></li>
+                                            <li><b>sanitary Pad Available:355</b></li>
+                                            <li><b>sanitary Pad Unavailable:25</b></li>
+                                            <li><b>Total Pregnant:256</b></li>
+                                            <li><b>Total Male Disabled:322</b></li>
+                                            <li><b>Total Female Disabled:322</b></li>
+                                            <li><b>Total Medical Checkup available:322</b></li>
+                                            <li><b>Total Family Members:322</b></li>
+                                            <li><b>Total Family Members:322</b></li>
 
-
+                                        </ul>
+                                    </div>
+                                    {/* /.card-body */}
+                                </div>
+                                {/* /.card */}
                             </div>
+                            {/* ./col */}
+
                             {/* /.col */}
                         </div>
                         {/* /.row */}

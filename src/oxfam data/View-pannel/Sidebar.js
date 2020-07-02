@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Sidebar() {
     return (
@@ -35,52 +36,52 @@ export default function Sidebar() {
                                 </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
-                                        <a href="./index.html" className="nav-link">
+                                        <Link to="/overall-data" className="nav-link">
                                             <i className="far fa-circle nav-icon" />
                                             <p>Overall Data</p>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="./index.html" className="nav-link">
+                                        <Link to="/province1" className="nav-link">
                                             <i className="far fa-circle nav-icon" />
                                             <p>Province 1</p>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="./index2.html" className="nav-link">
+                                        <Link to="/province2" href="./index2.html" className="nav-link">
                                             <i className="far fa-circle nav-icon" />
                                             <p>Province 2</p>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="./index3.html" className="nav-link">
+                                        <Link to="/bagmati" className="nav-link">
                                             <i className="far fa-circle nav-icon" />
                                             <p>Bagmati</p>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="./index2.html" className="nav-link">
+                                        <Link to="/gandaki" className="nav-link">
                                             <i className="far fa-circle nav-icon" />
                                             <p>Gandaki</p>
-                                        </a>
+                                        </Link >
                                     </li>
                                     <li className="nav-item">
-                                        <a href="./index2.html" className="nav-link">
+                                        <Link to="/province5" className="nav-link">
                                             <i className="far fa-circle nav-icon" />
                                             <p>Province 5</p>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="./index2.html" className="nav-link">
+                                        <Link to="/karnali" href="./index2.html" className="nav-link">
                                             <i className="far fa-circle nav-icon" />
                                             <p>Karnali</p>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="./index2.html" className="nav-link">
+                                        <Link to="/sudurpaschim" href="./index2.html" className="nav-link">
                                             <i className="far fa-circle nav-icon" />
                                             <p>Sudurpaschim</p>
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </li>
