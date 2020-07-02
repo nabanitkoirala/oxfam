@@ -1,12 +1,16 @@
 import React from 'react';
 
 import './App.css';
-import Map from './Mapbox';
+
+
+import Dashboard from './oxfam data/Pages/Main-dashboard';
+
+//import Map from './oxfam data/Mapbox';
 
 function App() {
   return (
     <div>
-      <Map />
+      <Dashboard />
     </div>
   );
 }

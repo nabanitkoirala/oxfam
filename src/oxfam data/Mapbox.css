@@ -1,0 +1,41 @@
+ .btn-circle.btn-md { 
+            
+            padding: 7px 10px; 
+            border-radius: 25px; 
+            font-size: 10px; 
+            text-align: center; 
+        } 
+         
+           .btn-circle.btn-sm { 
+            width: 25px; 
+            height: 25px; 
+            padding: 6px 0px; 
+            border-radius: 15px; 
+            font-size: 8px; 
+            text-align: center; 
+        } 
+       
+  .load{
+      text-align: center;
+       width: 1320px;
+       margin-top: 320px;
+  height: 50px;
+  display: inline-block;
+  }
+
+ 
+  .loader {
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+}
+ 
+  
+  
+
+ 
+
+        
