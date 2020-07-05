@@ -19,16 +19,39 @@ function Map() {
     const mapRef = useRef();//this renders the current state of map
     const [Covid, setCovid] = useState([]);//fetched data
     const [isLoading, setIsloading] = useState(true);
+    const [District, setDistrict] = useState([]);
+    const [Test, setTest] = useState({
+        district: '',
+        data: ''
+    }
+
+    );
+
+
+
+
 
     useEffect(() => {
         //fetching data from api 
-
-        //Axios.get('https://covid19wst.yilab.org.np/api/v1/form', { headers: { "Authorization": 'Token 44e2b23387334bcca310175463de768ee5c41743' } })
-        Axios.get('https://bipad.yilab.org.np/api/v1/covid19-case/')
-            //httpBrowsing.get('/form', true)
+        Axios.get('https://bipad.gov.np/api/v1/district/')
             .then(res => {
-                setCovid(res.data.results)
+                setDistrict(res.data.results)
+                setTest({
+                    district: res.data.results
+                })
                 setIsloading(false)
+
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+        Axios.get('https://covid19wst.yilab.org.np/api/v1/form', { headers: { "Authorization": 'Token 44e2b23387334bcca310175463de768ee5c41743' } })
+            // httpBrowsing.get('/form', true)
+            .then(res => {
+                setCovid(res.data)
+                setIsloading(false)
+
             })
             .catch(err => {
                 console.log(err);
@@ -36,12 +59,21 @@ function Map() {
 
     }, [])
 
+
+
+
     console.log(isLoading);
     console.log("covid data", Covid);
+    console.log("districts>>", District);
+    console.log("test>>", Test);
+
+
     //Data from an external/remote source will most likely need to be 
     //massaged into the format required by the supercluster library.
     //We must produce an array of GeoJSON Feature objects, with the 
     //geometry of each object being a GeoJSON Point.
+
+
 
     const points = Covid.map(item => ({
         type: "Feature",

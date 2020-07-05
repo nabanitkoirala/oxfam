@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from '../View-pannel/Header';
 import { Link } from 'react-router-dom';
 import Footer from '../View-pannel/Footer';
 import Map from './../Mapbox';
 import './../Mapbox.css';
+import { DataContext } from '../Store';
 
 export default function Province2() {
+    const [Data, setData] = useContext(DataContext);
+    let Water_resource_available = Data.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length;
+    let Water_resource_unavailable = Data.length - Water_resource_available;
+    let Toilet_available = Data.filter((item) => item.toilet === "छ").length;
+    let Toilet_unavailable = Data.length - Toilet_available;
+    let Wash_facility_available = Data.filter((item) => item.wash_facility === "छ").length;
+    let Wash_facility_unavailable = Data.length - Wash_facility_available;
+    let Sanitary_pad_available = Data.filter((item) => item.sanitary_pad_available === "छ").length;
+    let Sanitary_pad_unavailable = Data.length - Sanitary_pad_available;
+    let Total_family_having_pregnant_mother = Data.filter((item) => item.total_pregnant !== 0).length;
+    let Total_male_disabled_family = Data.filter((item) => item.total_male_disabled !== 0).length;
+    let Total_female_disabled_family = Data.filter((item) => item.total_female_disabled !== 0).length;
+    let Medical_checkup_available = Data.filter((item) => item.medical_checkup === "छ").length;
+    let Medical_checkup_unavailable = Data.length - Medical_checkup_available;
+    let Total_Family_in_Survey = Data.length;
+
+
+
     return (
         <div>
             <div>
@@ -19,13 +38,6 @@ export default function Province2() {
                     </a>
                     {/* Sidebar */}
                     <div className="sidebar">
-                        {/* Sidebar user panel (optional) */}
-                        <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-
-                            <div className="info">
-                                <a href="#" className="d-block">Field Research Data</a>
-                            </div>
-                        </div>
                         {/* Sidebar Menu */}
                         <nav className="mt-2">
                             <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -57,6 +69,13 @@ export default function Province2() {
                                                 <i className="far fa-circle nav-icon" />
                                                 <p>Province 2</p>
                                             </Link>
+                                            {/* select */}
+                                            <div className="form-group">
+                                                <select className="form-control">
+                                                    <option>Choose District</option>
+                                                    {Data.filter((item) => item.province == "प्रदेश नं .२").map((item, id) => <option key={id} value={item.district}>{item.district}</option>)}
+                                                </select>
+                                            </div>
                                         </li>
                                         <li className="nav-item">
                                             <Link to="/bagmati" className="nav-link">
@@ -129,7 +148,7 @@ export default function Province2() {
                                                     {/* Map will be created here */}
                                                     <div id="world-map-markers" style={{ height: 400, overflow: 'hidden' }}>
                                                         <div className="map" />
-                                                        <Map />
+                                                        {/**  <Map /> */}
                                                     </div>
                                                 </div>
 
@@ -151,20 +170,20 @@ export default function Province2() {
                                         {/* /.card-header */}
                                         <div className="card-body">
                                             <ul>
-                                                <li><b>Water Resource Available    :5</b></li>
-                                                <li><b>Water Resource Unavailable:3</b></li>
-                                                <li><b>Toilet Avaliable:300</b></li>
-                                                <li><b>Toilet Unavailable:25</b></li>
-                                                <li><b>Wash Facility available:25</b></li>
-                                                <li><b>Wash Facility unavailable:25</b></li>
-                                                <li><b>sanitary Pad Available:355</b></li>
-                                                <li><b>sanitary Pad Unavailable:25</b></li>
-                                                <li><b>Total Pregnant:256</b></li>
-                                                <li><b>Total Male Disabled:322</b></li>
-                                                <li><b>Total Female Disabled:322</b></li>
-                                                <li><b>Total Medical Checkup available:322</b></li>
-                                                <li><b>Total Family Members:322</b></li>
-                                                <li><b>Total Family Members:322</b></li>
+                                                <li><b>Water Resource Available    :{Water_resource_available}</b></li>
+                                                <li><b>Water Resource Unavailable:{Water_resource_unavailable}</b></li>
+                                                <li><b>Toilet Avaliable:{Toilet_available}</b></li>
+                                                <li><b>Toilet Unavailable:{Toilet_unavailable}</b></li>
+                                                <li><b>Wash Facility available:{Wash_facility_available}</b></li>
+                                                <li><b>Wash Facility unavailable:{Wash_facility_unavailable}</b></li>
+                                                <li><b>sanitary Pad Available:{Sanitary_pad_available}</b></li>
+                                                <li><b>sanitary Pad Unavailable:{Sanitary_pad_unavailable}</b></li>
+                                                <li><b>Total Family having Pregnant Women:{Total_family_having_pregnant_mother}</b></li>
+                                                <li><b>Total Male Disabled Family:{Total_male_disabled_family}</b></li>
+                                                <li><b>Total Female Disabled Family:{Total_female_disabled_family}</b></li>
+                                                <li><b>Medical Checkup available:{Medical_checkup_available}</b></li>
+                                                <li><b>Medical Checkup unavailable:{Medical_checkup_unavailable}</b></li>
+                                                <li><b>Total Family in survey:{Total_Family_in_Survey}</b></li>
 
                                             </ul>
                                         </div>

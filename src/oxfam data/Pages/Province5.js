@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from '../View-pannel/Header';
 import { Link } from 'react-router-dom';
 import Footer from '../View-pannel/Footer';
 import Map from './../Mapbox';
 import './../Mapbox.css';
+import { DataContext } from '../Store';
 
 export default function Province5() {
+    const [Data, setData] = useContext(DataContext);
+
+    let Test = Data.filter((item) => item.district).Map((item) => item.district);
+
+    console.log("what is output>>>", Test);
     return (
         <div>
             <div>
@@ -19,13 +25,6 @@ export default function Province5() {
                     </a>
                     {/* Sidebar */}
                     <div className="sidebar">
-                        {/* Sidebar user panel (optional) */}
-                        <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-
-                            <div className="info">
-                                <a href="#" className="d-block">Field Research Data</a>
-                            </div>
-                        </div>
                         {/* Sidebar Menu */}
                         <nav className="mt-2">
                             <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -75,6 +74,13 @@ export default function Province5() {
                                                 <i className="far fa-circle nav-icon" />
                                                 <p>Province 5</p>
                                             </Link>
+                                            {/* select */}
+                                            <div className="form-group">
+                                                <select className="form-control">
+                                                    <option>Choose District</option>
+                                                    {Data.filter((item) => item.province !== "प्रदेश नं .२").map((item, id) => <option key={id} value={item.district}>{item.district}</option>)}
+                                                </select>
+                                            </div>
                                         </li>
                                         <li className="nav-item">
                                             <Link to="/karnali" href="./index2.html" className="nav-link">
@@ -129,7 +135,7 @@ export default function Province5() {
                                                     {/* Map will be created here */}
                                                     <div id="world-map-markers" style={{ height: 400, overflow: 'hidden' }}>
                                                         <div className="map" />
-                                                        <Map />
+                                                        {/** <Map /> */}
                                                     </div>
                                                 </div>
 
@@ -151,21 +157,20 @@ export default function Province5() {
                                         {/* /.card-header */}
                                         <div className="card-body">
                                             <ul>
-                                                <li><b>Water Resource Available    :5</b></li>
-                                                <li><b>Water Resource Unavailable:3</b></li>
-                                                <li><b>Toilet Avaliable:300</b></li>
-                                                <li><b>Toilet Unavailable:25</b></li>
-                                                <li><b>Wash Facility available:25</b></li>
-                                                <li><b>Wash Facility unavailable:25</b></li>
-                                                <li><b>sanitary Pad Available:355</b></li>
-                                                <li><b>sanitary Pad Unavailable:25</b></li>
-                                                <li><b>Total Pregnant:256</b></li>
-                                                <li><b>Total Male Disabled:322</b></li>
-                                                <li><b>Total Female Disabled:322</b></li>
-                                                <li><b>Total Medical Checkup available:322</b></li>
-                                                <li><b>Total Family Members:322</b></li>
-                                                <li><b>Total Family Members:322</b></li>
-
+                                                <li><b>Water Resource Available    :0</b></li>
+                                                <li><b>Water Resource Unavailable:0</b></li>
+                                                <li><b>Toilet Avaliable:0</b></li>
+                                                <li><b>Toilet Unavailable:0</b></li>
+                                                <li><b>Wash Facility available:0</b></li>
+                                                <li><b>Wash Facility unavailable:0</b></li>
+                                                <li><b>sanitary Pad Available:0</b></li>
+                                                <li><b>sanitary Pad Unavailable:0</b></li>
+                                                <li><b>Total Pregnant:0</b></li>
+                                                <li><b>Total Male Disabled:0</b></li>
+                                                <li><b>Total Female Disabled:0</b></li>
+                                                <li><b>Total Medical Checkup available:0</b></li>
+                                                <li><b>Total Family Members:0</b></li>
+                                                <li><b>Total Family Members:0</b></li>
                                             </ul>
                                         </div>
                                         {/* /.card-body */}
