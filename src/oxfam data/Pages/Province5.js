@@ -9,9 +9,7 @@ import { DataContext } from '../Store';
 export default function Province5() {
     const [Data, setData] = useContext(DataContext);
 
-    let Test = Data.filter((item) => item.district).Map((item) => item.district);
 
-    console.log("what is output>>>", Test);
     return (
         <div>
             <div>
