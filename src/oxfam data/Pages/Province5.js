@@ -8,6 +8,10 @@ import { DataContext } from '../Store';
 
 export default function Province5() {
     const [Data, setData] = useContext(DataContext);
+    let Select_District = Array.from(new Set(Data.filter((item) => item.province !== "प्रदेश नं .२").map((item) => item.district)));
+
+
+    console.log("output>>>", Select_District);
 
 
     return (

@@ -22,7 +22,9 @@ export default function Province2() {
     let Medical_checkup_available = Data.filter((item) => item.medical_checkup === "छ").length;
     let Medical_checkup_unavailable = Data.length - Medical_checkup_available;
     let Total_Family_in_Survey = Data.length;
-
+    let Select_District = Array.from(new Set(Data.filter((item) => item.province === "प्रदेश नं .२").map((item) => item.district))).map((district) => Data.find((item) => item.district === district));
+    let Select_District_map = Select_District.map((item) => <option key={item.id} value={item.district}>{item.district}</option>)
+    console.log("output>>>", Select_District);
 
 
     return (
@@ -73,7 +75,9 @@ export default function Province2() {
                                             <div className="form-group">
                                                 <select className="form-control">
                                                     <option>Choose District</option>
-                                                    {Data.filter((item) => item.province == "प्रदेश नं .२").map((item, id) => <option key={id} value={item.district}>{item.district}</option>)}
+                                                    {Select_District_map}
+
+                                                    {/** {Data.filter((item) => item.province == "प्रदेश नं .२").map((item, id) => <option key={id} value={item.district}>{item.district}</option>)} */}
                                                 </select>
                                             </div>
                                         </li>
