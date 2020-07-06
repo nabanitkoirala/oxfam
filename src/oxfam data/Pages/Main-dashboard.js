@@ -160,7 +160,7 @@ export default function Dashboard() {
                                         <div className="d-md-flex">
                                             <div className="p-1 flex-fill" style={{ overflow: 'hidden' }}>
                                                 {/* Map will be created here */}
-                                                <div id="world-map-markers" style={{ height: 400, overflow: 'hidden' }}>
+                                                <div id="world-map-markers" style={{ height: 600, overflow: 'hidden' }}>
                                                     <div className="map" />
                                                     <Map />
                                                 </div>
@@ -201,6 +201,17 @@ export default function Dashboard() {
                                             <li><b>Medical Checkup available:{Medical_checkup_available}</b></li>
                                             <li><b>Medical Checkup unavailable:{Medical_checkup_unavailable}</b></li>
                                             <li><b>Total Family in survey:{Total_Family_in_Survey}</b></li>
+                                            <li><b><u>COVID CASES DETAILS</u></b></li>
+                                            <li><b>Total Normal Fever सामान्य (९६-९८.६ ) :1228</b></li>
+                                            <li><b>Total Fever ज्वरो (९८.६ -१०२ ):12</b></li>
+                                            <li><b>Total High Fever उच्च ज्वरो (१०२+):1</b></li>
+                                            <li><b>Total People Having Drycough:32</b></li>
+                                            <li><b>Total People not having Drycough:1209</b></li>
+                                            <li><b>Total People having Breathe Problem:25</b></li>
+                                            <li><b>Total People not having Breathe Problem:1216</b></li>
+                                            <li><b>Total People having Tiredness:219</b></li>
+                                            <li><b>Total People not having Tiredness:1022</b></li>
+                                            <li><b>Total Family Members of families having COVID19 Survey:1241</b></li>
 
                                         </ul>
                                     </div>
