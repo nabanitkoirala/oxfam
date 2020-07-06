@@ -22,6 +22,11 @@ export default function Dashboard() {
     let Medical_checkup_available = Data.filter((item) => item.medical_checkup === "छ").length;
     let Medical_checkup_unavailable = Data.length - Medical_checkup_available;
     let Total_Family_in_Survey = Data.length;
+    //total pregnant women in whole survey
+    let Total_number_of_pregnant_women = Data.reduce((prev, curr) => prev + curr.total_pregnant, 0);
+    let Total_male_disabled = Data.reduce((prev, curr) => prev + curr.total_male_disabled, 0);
+    let Total_female_disabled = Data.reduce((prev, curr) => prev + curr.total_female_disabled, 0);
+
     console.log("Dataa>>>", Data);
     console.log("Water Resource available>>>", Water_resource_available);
     console.log("Water Resource Unavailable>>>", Water_resource_unavailable);
@@ -37,6 +42,10 @@ export default function Dashboard() {
     console.log("Medical checkup available>>>", Medical_checkup_available);
     console.log("medical checkup unavailable>>>", Medical_checkup_unavailable);
     console.log("Total family in survey>>>", Total_Family_in_Survey);
+    console.log("total pregnant>>>", Total_number_of_pregnant_women);
+    console.log("total male disabled>>>", Total_male_disabled);
+    console.log("total female disabled>>>", Total_female_disabled);
+
 
     return (
         <div>
@@ -183,13 +192,15 @@ export default function Dashboard() {
                                             <li><b>Wash Facility unavailable:{Wash_facility_unavailable}</b></li>
                                             <li><b>sanitary Pad Available:{Sanitary_pad_available}</b></li>
                                             <li><b>sanitary Pad Unavailable:{Sanitary_pad_unavailable}</b></li>
+                                            <li><b>Total Pregnant Women:{Total_number_of_pregnant_women}</b></li>
                                             <li><b>Total Family having Pregnant Women:{Total_family_having_pregnant_mother}</b></li>
+                                            <li><b>Total Disable Male:{Total_male_disabled}</b></li>
                                             <li><b>Total Male Disabled Family:{Total_male_disabled_family}</b></li>
+                                            <li><b>Total Disable Female:{Total_female_disabled}</b></li>
                                             <li><b>Total Female Disabled Family:{Total_female_disabled_family}</b></li>
                                             <li><b>Medical Checkup available:{Medical_checkup_available}</b></li>
                                             <li><b>Medical Checkup unavailable:{Medical_checkup_unavailable}</b></li>
                                             <li><b>Total Family in survey:{Total_Family_in_Survey}</b></li>
-
 
                                         </ul>
                                     </div>
