@@ -131,7 +131,7 @@ export default function Sudurpaschim() {
                                                     {/* Map will be created here */}
                                                     <div id="world-map-markers" style={{ height: 400, overflow: 'hidden' }}>
                                                         <div className="map" />
-                                                        {/**<Map /> */}
+                                                        <Map />
                                                     </div>
                                                 </div>
 

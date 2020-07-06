@@ -7,6 +7,10 @@ export const MunicipalityContext = React.createContext([]);
 export const WardContext = React.createContext([]);
 export const DataContext = React.createContext([]);
 export const isLoadingContext = React.createContext(true);
+export const survey_DistContext = React.createContext([]);
+export const survey_MuniContext = React.createContext([]);
+
+
 
 
 const Store = ({ children }) => {
@@ -37663,12 +37667,12 @@ const Store = ({ children }) => {
         }
     ])
     const [Data, setData] = useState([]);
-    const [isLoading, setIsloading] = useState(true);
+
     useEffect(() => {
         Axios.get('https://covid19wst.yilab.org.np/api/v1/form', { headers: { "Authorization": 'Token 44e2b23387334bcca310175463de768ee5c41743' } })
             .then(res => {
                 setData(res.data)
-                setIsloading(false)
+
 
             })
             .catch(err => {

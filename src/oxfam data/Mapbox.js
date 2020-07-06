@@ -10,8 +10,9 @@ import Loader from 'react-loader';
 function Map() {
     //setting viewport for loading map
     const [viewport, setviewPort] = useState({
-        latitude: 27.001574082293832,
-        longitude: 85.30233086363795,
+
+        latitude: 26.8999964,
+        longitude: 87.9333296,
         width: "100vw",
         height: "100vh",
         zoom: 6,
@@ -19,13 +20,8 @@ function Map() {
     const mapRef = useRef();//this renders the current state of map
     const [Covid, setCovid] = useState([]);//fetched data
     const [isLoading, setIsloading] = useState(true);
-    const [District, setDistrict] = useState([]);
-    const [Test, setTest] = useState({
-        district: '',
-        data: ''
-    }
 
-    );
+
 
 
 
@@ -33,23 +29,10 @@ function Map() {
 
     useEffect(() => {
         //fetching data from api 
-        Axios.get('https://bipad.gov.np/api/v1/district/')
+        Axios.get('https://bipad.yilab.org.np/api/v1/covid19-case/')
             .then(res => {
-                setDistrict(res.data.results)
-                setTest({
-                    district: res.data.results
-                })
-                setIsloading(false)
+                setCovid(res.data.results)
 
-            })
-            .catch(err => {
-                console.log(err);
-            })
-
-        Axios.get('https://covid19wst.yilab.org.np/api/v1/form', { headers: { "Authorization": 'Token 44e2b23387334bcca310175463de768ee5c41743' } })
-            // httpBrowsing.get('/form', true)
-            .then(res => {
-                setCovid(res.data)
                 setIsloading(false)
 
             })
@@ -64,8 +47,8 @@ function Map() {
 
     console.log(isLoading);
     console.log("covid data", Covid);
-    console.log("districts>>", District);
-    console.log("test>>", Test);
+
+
 
 
     //Data from an external/remote source will most likely need to be 

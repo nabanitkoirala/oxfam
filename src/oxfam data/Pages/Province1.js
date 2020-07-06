@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Header from '../View-pannel/Header';
 import { Link } from 'react-router-dom';
 import Footer from '../View-pannel/Footer';
-//import Map from './../Mapbox';
+import Map from './../Mapbox';
 import './../Mapbox.css';
 import { DataContext, DistrictContext } from '../Store';
 
@@ -153,7 +153,7 @@ export default function Province1() {
                                                     {/* Map will be created here */}
                                                     <div id="world-map-markers" style={{ height: 400, overflow: 'hidden' }}>
                                                         <div className="map" />
-                                                        {/*<Map />*/}
+                                                        <Map />
                                                     </div>
                                                 </div>
 

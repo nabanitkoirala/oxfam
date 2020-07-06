@@ -8,6 +8,7 @@ import Testmap from './Testmap';
 import Store from './oxfam data/Store';
 
 import Routing from './utils/Routing';
+import Map from './oxfam data/Mapbox';
 
 
 
@@ -16,6 +17,7 @@ function App() {
     <Store>
       <Routing />
     </Store>
+
   );
 }
 

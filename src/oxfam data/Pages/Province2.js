@@ -10,6 +10,7 @@ export default function Province2() {
     const [Data, setData] = useContext(DataContext);
     const [survey_Dist, setSurvey_Dist] = useState([]);
     const [survey_Muni, setSurvey_Muni] = useState([]);
+
     const [isdistrictselected, setIsdistrictselected] = useState(false);
     const [ismunicipalityselected, setIsmunicipalityselected] = useState(false);
     const [municipalityFinallychooosen, setMunicipalityFinallychoosen] = useState(false);
@@ -108,8 +109,25 @@ export default function Province2() {
     let Demo = isdistrictselected ? survey_Dist.length : Data.length;
     let Demo2 = municipalityFinallychooosen ? survey_Muni.length : Data.length;
     let To = municipalityFinallychooosen ? Demo2 : Demo;
-
-
+    let Data_header1 = isdistrictselected ? <h3 className="card-title">
+        <i className="fas fa-text-width" />
+        Province 2 District Data
+      </h3>
+        :
+        <h3 className="card-title">
+            <i className="fas fa-text-width" />
+        Province 2 Data
+      </h3>
+    let Data_header2 = municipalityFinallychooosen ? <h3 className="card-title">
+        <i className="fas fa-text-width" />
+        Municipality Data
+      </h3>
+        :
+        <h3 className="card-title">
+            <i className="fas fa-text-width" />
+        Province 2 Data
+      </h3>
+    let Data_header_final = municipalityFinallychooosen ? Data_header2 : Data_header1;
 
 
     console.log("survey district>>>", survey_Dist);
@@ -128,7 +146,7 @@ export default function Province2() {
                 <aside className="main-sidebar sidebar-dark-primary elevation-4">
                     {/* Brand Logo */}
                     <a href="index3.html" className="brand-link">
-                        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
+                        <img src="oxfam.jpg" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
                         <span className="brand-text font-weight-light">Oxfam</span>
                     </a>
                     {/* Sidebar */}
@@ -243,7 +261,7 @@ export default function Province2() {
                             <div className="row">
                                 {/* Left col */}
 
-                                <div className="col-md-8">
+                                <div className="col-md-7">
                                     {/* MAP & BOX PANE */}
                                     <div className="card">
                                         <div className="card-header">
@@ -254,9 +272,9 @@ export default function Province2() {
                                             <div className="d-md-flex">
                                                 <div className="p-1 flex-fill" style={{ overflow: 'hidden' }}>
                                                     {/* Map will be created here */}
-                                                    <div id="world-map-markers" style={{ height: 400, overflow: 'hidden' }}>
+                                                    <div id="world-map-markers" style={{ height: 500, overflow: 'hidden' }}>
                                                         <div className="map" />
-                                                        {/**  <Map /> */}
+                                                        <Map />
                                                     </div>
                                                 </div>
 
@@ -267,10 +285,10 @@ export default function Province2() {
 
 
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-5">
                                     <div className="card">
                                         <div className="card-header">
-                                            {Data_header}
+                                            {Data_header_final}
                                         </div>
                                         {/* /.card-header */}
                                         <div className="card-body">
