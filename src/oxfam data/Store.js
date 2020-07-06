@@ -9,6 +9,7 @@ export const DataContext = React.createContext([]);
 export const isLoadingContext = React.createContext(true);
 export const survey_DistContext = React.createContext([]);
 export const survey_MuniContext = React.createContext([]);
+export const CovidContext = React.createContext([]);
 
 
 
@@ -37667,6 +37668,8 @@ const Store = ({ children }) => {
         }
     ])
     const [Data, setData] = useState([]);
+    const [Covid, setCovid] = useState([]);
+    const [isloading, setIsloading] = useState(true);
 
     useEffect(() => {
         Axios.get('https://covid19wst.yilab.org.np/api/v1/form', { headers: { "Authorization": 'Token 44e2b23387334bcca310175463de768ee5c41743' } })
@@ -37678,6 +37681,22 @@ const Store = ({ children }) => {
             .catch(err => {
                 console.log(err);
             })
+
+
+    }, [])
+    useEffect(() => {
+        Axios.get('https://bipad.yilab.org.np/api/v1/covid19-case/')
+            .then(res => {
+                setCovid(res.data.results)
+
+                setIsloading(false)
+
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+
     }, [])
     return (
         <ProvinceContext.Provider value={[Province]}>
@@ -37685,7 +37704,11 @@ const Store = ({ children }) => {
                 <MunicipalityContext.Provider value={[Municipality]}>
                     <WardContext.Provider value={[Ward]}>
                         <DataContext.Provider value={[Data, setData]}>
-                            {children}
+                            <CovidContext.Provider value={[Covid, setCovid]}>
+                                <isLoadingContext.Provider value={[isloading, setIsloading]}>
+                                    {children}
+                                </isLoadingContext.Provider>
+                            </CovidContext.Provider>
                         </DataContext.Provider>
                     </WardContext.Provider>
                 </MunicipalityContext.Provider>

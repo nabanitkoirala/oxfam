@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import ReactMapGl, { Marker, FlyToInterpolator } from 'react-map-gl';
 import Axios from 'axios';
 import useSupercluster from 'use-supercluster';
 import './Mapbox.css';
 import Loader from 'react-loader';
+import { CovidContext, isLoadingContext } from './Store';
 //import httpBrowsing from './../utils/httpBrowsing';
 
 
@@ -18,17 +19,18 @@ function Map() {
         zoom: 6,
     })
     const mapRef = useRef();//this renders the current state of map
-    const [Covid, setCovid] = useState([]);//fetched data
-    const [isLoading, setIsloading] = useState(true);
+    const [Covid, setCovid] = useContext(CovidContext);//fetched data
+    const [isLoading, setIsloading] = useContext(isLoadingContext);
 
 
 
 
 
 
+    {/**
 
     useEffect(() => {
-        //fetching data from api 
+        //fetching data from api
         Axios.get('https://bipad.yilab.org.np/api/v1/covid19-case/')
             .then(res => {
                 setCovid(res.data.results)
@@ -42,6 +44,7 @@ function Map() {
 
     }, [])
 
+*/}
 
 
 
