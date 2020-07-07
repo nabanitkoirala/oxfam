@@ -119,7 +119,7 @@ export default function Bagmati() {
                             <div className="row">
                                 {/* Left col */}
 
-                                <div className="col-md-8">
+                                <div className="col-md-7">
                                     {/* MAP & BOX PANE */}
                                     <div className="card">
                                         <div className="card-header">
@@ -130,7 +130,7 @@ export default function Bagmati() {
                                             <div className="d-md-flex">
                                                 <div className="p-1 flex-fill" style={{ overflow: 'hidden' }}>
                                                     {/* Map will be created here */}
-                                                    <div id="world-map-markers" style={{ height: 400, overflow: 'hidden' }}>
+                                                    <div id="world-map-markers" style={{ height: 600, overflow: 'hidden' }}>
                                                         <div className="map" />
 
                                                         <Map />
@@ -146,7 +146,7 @@ export default function Bagmati() {
 
 
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-5">
                                     <div className="card">
                                         <div className="card-header">
                                             <h3 className="card-title">
@@ -156,22 +156,40 @@ export default function Bagmati() {
                                         </div>
                                         {/* /.card-header */}
                                         <div className="card-body">
-                                            <ul>
-                                                <li><b>Water Resource Available    :0</b></li>
-                                                <li><b>Water Resource Unavailable:0</b></li>
-                                                <li><b>Toilet Avaliable:0</b></li>
-                                                <li><b>Toilet Unavailable:0</b></li>
-                                                <li><b>Wash Facility available:0</b></li>
-                                                <li><b>Wash Facility unavailable:0</b></li>
-                                                <li><b>sanitary Pad Available:0</b></li>
-                                                <li><b>sanitary Pad Unavailable:0</b></li>
-                                                <li><b>Total Pregnant:0</b></li>
-                                                <li><b>Total Male Disabled:0</b></li>
-                                                <li><b>Total Female Disabled:0</b></li>
-                                                <li><b>Total Medical Checkup available:0</b></li>
-                                                <li><b>Total Family Members:0</b></li>
-                                                <li><b>Total Family Members:0</b></li>
-                                            </ul>
+                                            <div className="info-box mb-3 bg-success">
+                                                <div className="info-box-content">
+                                                    <span className="info-box-text"><li>Water Resource Available: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Water Resource Unavailable: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Toilet Avaliable: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Toilet Unavailable: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Wash Facility available: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Wash Facility unavailable: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>sanitary Pad Available: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>sanitary Pad Unavailable: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Pregnant Women: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Family having Pregnant Women: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Disable Male: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Male Disabled Family: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Disable Female: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Female Disabled Family: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Medical Checkup available: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Medical Checkup unavailable: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Family in survey: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><b><u>COVID CASES DETAILS</u></b></span>
+                                                    <span className="info-box-text"><li>Total Normal Fever सामान्य (९६-९८.६ ): <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Fever ज्वरो (९८.६ -१०२ ): <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total High Fever उच्च ज्वरो (१०२+): <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People Having Drycough: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People not having Drycough: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People having Breathe Problem: <span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People not having Breathe Problem:<span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People having Tiredness:<span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People not having Tiredness:<span><b>0</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Family Members in COVID19 Survey:<span><b>0</b></span></li></span>
+
+                                                </div>
+
+                                            </div>
                                         </div>
                                         {/* /.card-body */}
                                     </div>

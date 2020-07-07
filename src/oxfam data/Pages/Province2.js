@@ -156,7 +156,7 @@ export default function Province2() {
                         {/* Sidebar Menu */}
                         <nav className="mt-2">
                             <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                                {/* Add icons to the links using the .nav-icon class
+                                {/* Add icons to the links using the .nav-icon className
          with font-awesome or any other icon font library */}
                                 <li className="nav-item has-treeview menu-open">
                                     <a href="#" className="nav-link active">
@@ -183,6 +183,7 @@ export default function Province2() {
                                             <Link to="/province2" className="nav-link active" onClick={(e) => {
                                                 setIsdistrictselected(false)
                                                 setMunicipalityFinallychoosen(false)
+                                                setIsmunicipalityselected(false)
                                             }}>
                                                 <i className="far fa-circle nav-icon" />
                                                 <p>Province 2</p>
@@ -294,36 +295,40 @@ export default function Province2() {
                                         </div>
                                         {/* /.card-header */}
                                         <div className="card-body">
-                                            <ul>
-                                                <li><b>Water Resource Available    :{Water_resource_available_final}</b></li>
-                                                <li><b>Water Resource Unavailable:{water_resource_unavailable_final}</b></li>
-                                                <li><b>Toilet Avaliable:{Toilet_available_final}</b></li>
-                                                <li><b>Toilet Unavailable:{Toilet_unavailable_final}</b></li>
-                                                <li><b>Wash Facility available:{Wash_facility_available_final}</b></li>
-                                                <li><b>Wash Facility unavailable:{Wash_facility_unavailable_final}</b></li>
-                                                <li><b>sanitary Pad Available:{Sanitary_pad_available_final}</b></li>
-                                                <li><b>sanitary Pad Unavailable:{Sanitary_pad_unavailable_final}</b></li>
-                                                <li><b>Total Pregnant Women:{Total_number_of_pregnant_women_final}</b></li>
-                                                <li><b>Total Family having Pregnant Women:{Total_family_having_pregnant_mother_final}</b></li>
-                                                <li><b>Total Disable Male:{Total_male_disabled_final}</b></li>
-                                                <li><b>Total Male Disabled Family:{Total_male_disabled_family_final}</b></li>
-                                                <li><b>Total Disable Female:{Total_female_disabled_final}</b></li>
-                                                <li><b>Total Female Disabled Family:{Total_female_disabled_family_final}</b></li>
-                                                <li><b>Medical Checkup available:{Medical_checkup_available_final}</b></li>
-                                                <li><b>Medical Checkup unavailable:{Medical_checkup_unavailable_final}</b></li>
-                                                <li><b>Total Family in survey:{Total_Family_in_Survey_final}</b></li>
-                                                <b><u>COVID CASES DETAILS</u></b>
-                                                <li><b>Total Normal Fever सामान्य (९६-९८.६ ) :1228</b></li>
-                                                <li><b>Total Fever ज्वरो (९८.६ -१०२ ):12</b></li>
-                                                <li><b>Total High Fever उच्च ज्वरो (१०२+):1</b></li>
-                                                <li><b>Total People Having Drycough:32</b></li>
-                                                <li><b>Total People not having Drycough:1209</b></li>
-                                                <li><b>Total People having Breathe Problem:25</b></li>
-                                                <li><b>Total People not having Breathe Problem:1216</b></li>
-                                                <li><b>Total People having Tiredness:219</b></li>
-                                                <li><b>Total People not having Tiredness:1022</b></li>
-                                                <li><b>Total Family Members of families having COVID19 Survey:1241</b></li>
-                                            </ul>
+                                            <div className="info-box mb-3 bg-success">
+                                                <div className="info-box-content">
+                                                    <span className="info-box-text"><li>Water Resource Available: <span><b>{Water_resource_available_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Water Resource Unavailable: <span><b>{water_resource_unavailable_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Toilet Avaliable: <span><b>{Toilet_available_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Toilet Unavailable: <span><b>{Toilet_unavailable_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Wash Facility available: <span><b>{Wash_facility_available_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Wash Facility unavailable: <span><b>{Wash_facility_unavailable_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>sanitary Pad Available: <span><b>{Sanitary_pad_available_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>sanitary Pad Unavailable: <span><b>{Sanitary_pad_unavailable_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Pregnant Women: <span><b>{Total_number_of_pregnant_women_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Family having Pregnant Women: <span><b>{Total_family_having_pregnant_mother_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Disable Male: <span><b>{Total_male_disabled_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Male Disabled Family: <span><b>{Total_male_disabled_family_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Disable Female: <span><b>{Total_female_disabled_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Female Disabled Family: <span><b>{Total_female_disabled_family_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Medical Checkup available: <span><b>{Medical_checkup_available_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Medical Checkup unavailable: <span><b>{Medical_checkup_unavailable_final}</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Family in survey: <span><b>{Total_Family_in_Survey_final}</b></span></li></span>
+                                                    <span className="info-box-text"><b><u>COVID CASES DETAILS</u></b></span>
+                                                    <span className="info-box-text"><li>Total Normal Fever सामान्य (९६-९८.६ ): <span><b>1228</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Fever ज्वरो (९८.६ -१०२ ): <span><b>12</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total High Fever उच्च ज्वरो (१०२+): <span><b>1</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People Having Drycough: <span><b>32</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People not having Drycough: <span><b>1209</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People having Breathe Problem: <span><b>25</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People not having Breathe Problem:<span><b>1216</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People having Tiredness:<span><b>219</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total People not having Tiredness:<span><b>1022</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Family Members in COVID19 Survey:<span><b>1241</b></span></li></span>
+
+                                                </div>
+
+                                            </div>
                                         </div>
                                         {/* /.card-body */}
                                     </div>

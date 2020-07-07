@@ -183,37 +183,41 @@ export default function Dashboard() {
                                     </div>
                                     {/* /.card-header */}
                                     <div className="card-body">
-                                        <ul>
-                                            <li><b>Water Resource Available    :{Water_resource_available}</b></li>
-                                            <li><b>Water Resource Unavailable:{Water_resource_unavailable}</b></li>
-                                            <li><b>Toilet Avaliable:{Toilet_available}</b></li>
-                                            <li><b>Toilet Unavailable:{Toilet_unavailable}</b></li>
-                                            <li><b>Wash Facility available:{Wash_facility_available}</b></li>
-                                            <li><b>Wash Facility unavailable:{Wash_facility_unavailable}</b></li>
-                                            <li><b>sanitary Pad Available:{Sanitary_pad_available}</b></li>
-                                            <li><b>sanitary Pad Unavailable:{Sanitary_pad_unavailable}</b></li>
-                                            <li><b>Total Pregnant Women:{Total_number_of_pregnant_women}</b></li>
-                                            <li><b>Total Family having Pregnant Women:{Total_family_having_pregnant_mother}</b></li>
-                                            <li><b>Total Disable Male:{Total_male_disabled}</b></li>
-                                            <li><b>Total Male Disabled Family:{Total_male_disabled_family}</b></li>
-                                            <li><b>Total Disable Female:{Total_female_disabled}</b></li>
-                                            <li><b>Total Female Disabled Family:{Total_female_disabled_family}</b></li>
-                                            <li><b>Medical Checkup available:{Medical_checkup_available}</b></li>
-                                            <li><b>Medical Checkup unavailable:{Medical_checkup_unavailable}</b></li>
-                                            <li><b>Total Family in survey:{Total_Family_in_Survey}</b></li>
-                                            <li><b><u>COVID CASES DETAILS</u></b></li>
-                                            <li><b>Total Normal Fever सामान्य (९६-९८.६ ) :1228</b></li>
-                                            <li><b>Total Fever ज्वरो (९८.६ -१०२ ):12</b></li>
-                                            <li><b>Total High Fever उच्च ज्वरो (१०२+):1</b></li>
-                                            <li><b>Total People Having Drycough:32</b></li>
-                                            <li><b>Total People not having Drycough:1209</b></li>
-                                            <li><b>Total People having Breathe Problem:25</b></li>
-                                            <li><b>Total People not having Breathe Problem:1216</b></li>
-                                            <li><b>Total People having Tiredness:219</b></li>
-                                            <li><b>Total People not having Tiredness:1022</b></li>
-                                            <li><b>Total Family Members of families having COVID19 Survey:1241</b></li>
+                                        <div className="info-box mb-3 bg-success">
+                                            <div className="info-box-content">
+                                                <span className="info-box-text"><li>Water Resource Available: <span><b>{Water_resource_available}</b></span></li></span>
+                                                <span className="info-box-text"><li>Water Resource Unavailable: <span><b>{Water_resource_unavailable}</b></span></li></span>
+                                                <span className="info-box-text"><li>Toilet Avaliable: <span><b>{Toilet_available}</b></span></li></span>
+                                                <span className="info-box-text"><li>Toilet Unavailable: <span><b>{Toilet_unavailable}</b></span></li></span>
+                                                <span className="info-box-text"><li>Wash Facility available: <span><b>{Wash_facility_available}</b></span></li></span>
+                                                <span className="info-box-text"><li>Wash Facility unavailable: <span><b>{Wash_facility_unavailable}</b></span></li></span>
+                                                <span className="info-box-text"><li>sanitary Pad Available: <span><b>{Sanitary_pad_available}</b></span></li></span>
+                                                <span className="info-box-text"><li>sanitary Pad Unavailable: <span><b>{Sanitary_pad_unavailable}</b></span></li></span>
+                                                <span className="info-box-text"><li>Total Pregnant Women: <span><b>{Total_number_of_pregnant_women}</b></span></li></span>
+                                                <span className="info-box-text"><li>Total Family having Pregnant Women: <span><b>{Total_family_having_pregnant_mother}</b></span></li></span>
+                                                <span className="info-box-text"><li>Total Disable Male: <span><b>{Total_male_disabled}</b></span></li></span>
+                                                <span className="info-box-text"><li>Total Male Disabled Family: <span><b>{Total_male_disabled_family}</b></span></li></span>
+                                                <span className="info-box-text"><li>Total Disable Female: <span><b>{Total_female_disabled}</b></span></li></span>
+                                                <span className="info-box-text"><li>Total Female Disabled Family: <span><b>{Total_female_disabled_family}</b></span></li></span>
+                                                <span className="info-box-text"><li>Medical Checkup available: <span><b>{Medical_checkup_available}</b></span></li></span>
+                                                <span className="info-box-text"><li>Medical Checkup unavailable: <span><b>{Medical_checkup_unavailable}</b></span></li></span>
+                                                <span className="info-box-text"><li>Total Family in survey: <span><b>{Total_Family_in_Survey}</b></span></li></span>
+                                                <span className="info-box-text"><b><u>COVID CASES DETAILS</u></b></span>
+                                                <span className="info-box-text"><li>Total Normal Fever सामान्य (९६-९८.६ ): <span><b>1228</b></span></li></span>
+                                                <span className="info-box-text"><li>Total Fever ज्वरो (९८.६ -१०२ ): <span><b>12</b></span></li></span>
+                                                <span className="info-box-text"><li>Total High Fever उच्च ज्वरो (१०२+): <span><b>1</b></span></li></span>
+                                                <span className="info-box-text"><li>Total People Having Drycough: <span><b>32</b></span></li></span>
+                                                <span className="info-box-text"><li>Total People not having Drycough: <span><b>1209</b></span></li></span>
+                                                <span className="info-box-text"><li>Total People having Breathe Problem: <span><b>25</b></span></li></span>
+                                                <span className="info-box-text"><li>Total People not having Breathe Problem:<span><b>1216</b></span></li></span>
+                                                <span className="info-box-text"><li>Total People having Tiredness:<span><b>219</b></span></li></span>
+                                                <span className="info-box-text"><li>Total People not having Tiredness:<span><b>1022</b></span></li></span>
+                                                <span className="info-box-text"><li>Total Family Members in COVID19 Survey:<span><b>1241</b></span></li></span>
 
-                                        </ul>
+                                            </div>
+
+                                        </div>
+
                                     </div>
                                     {/* /.card-body */}
                                 </div>
