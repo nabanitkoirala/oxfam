@@ -32,11 +32,11 @@ export default function Dashboard() {
     const [selectedPerson, setselectedPerson] = useState(null);
     const [viewport, setviewPort] = useState({
 
-        latitude: 26.378177,
-        longitude: 85.366409,
-        width: "50vw",
+        latitude: 26.4667,
+        longitude: 87.2667,
+        width: "100vw",
         height: "135vh",
-        zoom: 8
+        zoom: 7.5
     })
     // 26.930519228980092,
     // 85.68968070300077,
@@ -45,22 +45,22 @@ export default function Dashboard() {
     let Water_resource_available_district = isdistrictfinallychoosen ? survey_District.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length : Data.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length;
     let water_resource_available_municipality = ismunicipalityfinallychoosen ? survey_Muni.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length : Data.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length;
     let Water_resource_available_final = ismunicipalityfinallychoosen ? water_resource_available_municipality : isdistrictfinallychoosen ? Water_resource_available_district : Water_resource_available_province;
-    let Water_resource_available = isloading ? <p>Loading Data..</p> : Water_resource_available_final;
-    let water_resource_unavailable_final = ismunicipalityfinallychoosen ? survey_Muni.length - Water_resource_available_final : isdistrictfinallychoosen ? survey_District.length - Water_resource_available_final : Data.length - Water_resource_available_final;
-    let water_resource_unavailable = isloading ? <p>Loading Data..</p> : water_resource_unavailable_final;
-
+    let Water_resource_available = isloading ? <div class="spinner-border text-info bolder"></div> : Water_resource_available_final;
+    let water_resource_unavailable = isloading ? <div class="spinner-border text-info bolder"></div> : ismunicipalityfinallychoosen ? survey_Muni.length - Water_resource_available_final : isdistrictfinallychoosen ? survey_District.length - Water_resource_available_final : Data.length - Water_resource_available_final;
+    // let water_resource_unavailable = isloading ? <div class="spinner-border text-info bolder"></div> : water_resource_unavailable_final;
+    //let water_resource_unavailable = ismunicipalityfinallychoosen ? survey_Muni.length - Water_resource_available_final : isdistrictfinallychoosen ? survey_District.length - Water_resource_available_final : Data.length - Water_resource_available_final;
 
     let Toilet_available_province = isprovinceselected ? survey_Province.filter((item) => item.toilet === "छ").length : Data.filter((item) => item.toilet === "छ").length;
     let Toilet_available_district = isdistrictfinallychoosen ? survey_District.filter((item) => item.toilet === "छ").length : Data.filter((item) => item.toilet === "छ").length;
     let Toilet_available_municipality = ismunicipalityfinallychoosen ? survey_Muni.filter((item) => item.toilet === "छ").length : Data.filter((item) => item.toilet === "छ").length;
     let Toilet_available_final = ismunicipalityfinallychoosen ? Toilet_available_municipality : isdistrictfinallychoosen ? Toilet_available_district : Toilet_available_province;
-    let Toilet_available = isloading ? <p>Loading Data..</p> : Toilet_available_final;
+    let Toilet_available = isloading ? <div class="spinner-border text-info bolder"></div> : Toilet_available_final;
 
     let Toilet_unavailable_province = isprovinceselected ? survey_Province.filter((item) => item.toilet === "छैन").length : Data.filter((item) => item.toilet === "छैन").length;
     let Toilet_unavailable_district = isdistrictfinallychoosen ? survey_District.filter((item) => item.toilet === "छैन").length : Data.filter((item) => item.toilet === "छैन").length;
     let Toilet_unavailable_municipality = ismunicipalityfinallychoosen ? survey_Muni.filter((item) => item.toilet === "छैन").length : Data.filter((item) => item.toilet === "छैन").length;
     let Toilet_unavailable_final = ismunicipalityfinallychoosen ? Toilet_unavailable_municipality : isdistrictfinallychoosen ? Toilet_unavailable_district : Toilet_unavailable_province;
-    let Toilet_unavailable = isloading ? <p>Loading Data..</p> : Toilet_available_final;
+    let Toilet_unavailable = isloading ? <div class="spinner-border text-info bolder"></div> : Toilet_available_final;
 
 
 
@@ -69,13 +69,13 @@ export default function Dashboard() {
     let Wash_facility_available_district = isdistrictfinallychoosen ? survey_District.filter((item) => item.wash_facility === "छ").length : Data.filter((item) => item.wash_facility === "छ").length;
     let Wash_facility_available_municipality = ismunicipalityfinallychoosen ? survey_Muni.filter((item) => item.wash_facility === "छ").length : Data.filter((item) => item.wash_facility === "छ").length;
     let Wash_facility_available_final = ismunicipalityfinallychoosen ? Wash_facility_available_municipality : isdistrictfinallychoosen ? Wash_facility_available_district : Wash_facility_available_province;
-    let Wash_facility_available = isloading ? <p>Loading Data..</p> : Wash_facility_available_final;
+    let Wash_facility_available = isloading ? <div class="spinner-border text-info bolder"></div> : Wash_facility_available_final;
 
     let Wash_facility_unavailable_province = isprovinceselected ? survey_Province.filter((item) => item.wash_facility === "छैन").length : Data.filter((item) => item.wash_facility === "छैन").length;
     let Wash_facility_unavailable_district = isdistrictfinallychoosen ? survey_District.filter((item) => item.wash_facility === "छैन").length : Data.filter((item) => item.wash_facility === "छैन").length;
     let Wash_facility_unavailable_municipality = ismunicipalityfinallychoosen ? survey_Muni.filter((item) => item.wash_facility === "छैन").length : Data.filter((item) => item.wash_facility === "छैन").length;
     let Wash_facility_unavailable_final = ismunicipalityfinallychoosen ? Wash_facility_unavailable_municipality : isdistrictfinallychoosen ? Wash_facility_unavailable_district : Wash_facility_unavailable_province;
-    let Wash_facility_unavailable = isloading ? <p>Loading Data..</p> : Wash_facility_unavailable_final;
+    let Wash_facility_unavailable = isloading ? <div class="spinner-border text-info bolder"></div> : Wash_facility_unavailable_final;
 
 
     let Demo = [];
@@ -123,36 +123,36 @@ export default function Dashboard() {
     let Normal_fever_District = isdistrictfinallychoosen ? Covid_district.filter((item) => item.temperature === "सामान्य (९६-९८.६ )").length : total_family_covid_data.filter((item) => item.temperature === "सामान्य (९६-९८.६ )").length;
     let Normal_fever_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.temperature === "सामान्य (९६-९८.६ )").length : total_family_covid_data.filter((item) => item.temperature === "सामान्य (९६-९८.६ )").length;
     let Normal_fever = ismunicipalityfinallychoosen ? Normal_fever_municipality : isdistrictfinallychoosen ? Normal_fever_District : Normal_fever_province;
-    let Normal_fever_final = isloading ? <p>Loading Data..</p> : Normal_fever;
+    let Normal_fever_final = isloading ? <div class="spinner-border text-info bolder"></div> : Normal_fever;
     let Fever_province = isprovinceselected ? Covid_province.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length : total_family_covid_data.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length;
     let Fever_District = isdistrictfinallychoosen ? Covid_district.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length : total_family_covid_data.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length;
     let Fever_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length : total_family_covid_data.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length;
     let Fever = ismunicipalityfinallychoosen ? Fever_municipality : isdistrictfinallychoosen ? Fever_District : Fever_province;
-    let Fever_final = isloading ? <p>Loading Data..</p> : Fever;
+    let Fever_final = isloading ? <div class="spinner-border text-info bolder"></div> : Fever;
 
     let High_fever_province = isprovinceselected ? Covid_province.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length : total_family_covid_data.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length;
     let High_fever_district = isdistrictfinallychoosen ? Covid_district.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length : total_family_covid_data.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length;
     let High_fever_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length : total_family_covid_data.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length;
     let High_fever = ismunicipalityfinallychoosen ? High_fever_municipality : isdistrictfinallychoosen ? High_fever_district : High_fever_province;
-    let High_fever_final = isloading ? <p>Loading Data..</p> : High_fever;
+    let High_fever_final = isloading ? <div class="spinner-border text-info bolder"></div> : High_fever;
 
     let Dry_Cough_province = isprovinceselected ? Covid_province.filter((item) => item.dry_cough === "छ").length : total_family_covid_data.filter((item) => item.dry_cough === "छ").length;
     let Dry_Cough_district = isdistrictfinallychoosen ? Covid_district.filter((item) => item.dry_cough === "छ").length : total_family_covid_data.filter((item) => item.dry_cough === "छ").length;
     let Dry_Cough_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.dry_cough === "छ").length : total_family_covid_data.filter((item) => item.dry_cough === "छ").length;
     let Dry_Cough = ismunicipalityfinallychoosen ? Dry_Cough_municipality : isdistrictfinallychoosen ? Dry_Cough_district : Dry_Cough_province;
-    let Dry_Cough_final = isloading ? <p>Loading Data..</p> : Dry_Cough;
+    let Dry_Cough_final = isloading ? <div class="spinner-border text-info bolder"></div> : Dry_Cough;
 
     let Breathing_problem_province = isprovinceselected ? Covid_province.filter((item) => item.breath_problem === "छ").length : total_family_covid_data.filter((item) => item.breath_problem === "छ").length;
     let Breathing_problem_district = isdistrictfinallychoosen ? Covid_district.filter((item) => item.breath_problem === "छ").length : total_family_covid_data.filter((item) => item.breath_problem === "छ").length;
     let Breathing_problem_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.breath_problem === "छ").length : total_family_covid_data.filter((item) => item.breath_problem === "छ").length;
     let Breathing_problem = ismunicipalityfinallychoosen ? Breathing_problem_municipality : isdistrictfinallychoosen ? Breathing_problem_district : Breathing_problem_province;
-    let Breathing_problem_final = isloading ? <p>Loading Data..</p> : Breathing_problem;
+    let Breathing_problem_final = isloading ? <div class="spinner-border text-info bolder"></div> : Breathing_problem;
 
     let Tiredness_province = isprovinceselected ? Covid_province.filter((item) => item.tiredness === "छ").length : total_family_covid_data.filter((item) => item.tiredness === "छ").length;
     let Tiredness_district = isdistrictfinallychoosen ? Covid_district.filter((item) => item.tiredness === "छ").length : total_family_covid_data.filter((item) => item.tiredness === "छ").length;
     let Tiredness_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.tiredness === "छ").length : total_family_covid_data.filter((item) => item.tiredness === "छ").length;
     let Tiredness = ismunicipalityfinallychoosen ? Tiredness_municipality : isdistrictfinallychoosen ? Tiredness_district : Tiredness_province;
-    let Tiredness_final = isloading ? <p>Loading Data..</p> : Tiredness;
+    let Tiredness_final = isloading ? <div class="spinner-border text-info bolder"></div> : Tiredness;
 
     //selects all province and removes dublicate province 
     let Select_province = Array.from(new Set(Data.filter((item) => item.province).map((item) => item.province))).map((province) => Data.find((item) => item.province === province));
