@@ -1,139 +1,353 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Header from '../View-pannel/Header';
+import ReactMapGl, { Marker, Popup } from 'react-map-gl';
 import { Link } from 'react-router-dom';
 import Footer from '../View-pannel/Footer';
-import Map from './../Mapbox';
+//import Map from './../Mapbox';
 import './../Mapbox.css';
-import { DataContext } from '../Store';
+import { DataContext, DistrictContext, WardContext, MunicipalityContext, ProvinceContext, isLoadingContext } from '../Store';
+import './design.css';
 
 export default function Dashboard() {
-    const [Data, setData] = useContext(DataContext);
-    let Water_resource_available = Data.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length;
-    let Water_resource_unavailable = Data.length - Water_resource_available;
-    let Toilet_available = Data.filter((item) => item.toilet === "छ").length;
-    let Toilet_unavailable = Data.length - Toilet_available;
-    let Wash_facility_available = Data.filter((item) => item.wash_facility === "छ").length;
-    let Wash_facility_unavailable = Data.length - Wash_facility_available;
-    let Sanitary_pad_available = Data.filter((item) => item.sanitary_pad_available === "छ").length;
-    let Sanitary_pad_unavailable = Data.length - Sanitary_pad_available;
-    let Total_family_having_pregnant_mother = Data.filter((item) => item.total_pregnant !== 0).length;
-    let Total_male_disabled_family = Data.filter((item) => item.total_male_disabled !== 0).length;
-    let Total_female_disabled_family = Data.filter((item) => item.total_female_disabled !== 0).length;
-    let Medical_checkup_available = Data.filter((item) => item.medical_checkup === "छ").length;
-    let Medical_checkup_unavailable = Data.length - Medical_checkup_available;
-    let Total_Family_in_Survey = Data.length;
-    //total pregnant women in whole survey
-    let Total_number_of_pregnant_women = Data.reduce((prev, curr) => prev + curr.total_pregnant, 0);
-    let Total_male_disabled = Data.reduce((prev, curr) => prev + curr.total_male_disabled, 0);
-    let Total_female_disabled = Data.reduce((prev, curr) => prev + curr.total_female_disabled, 0);
+    const [Municipality] = useContext(MunicipalityContext);
+    const [Province] = useContext(ProvinceContext);
+    const [District] = useContext(DistrictContext);
+    const [Ward] = useContext(WardContext);
+    const [Data, setData] = useContext(DataContext);//form data
+    const [isloading, setIsloading] = useContext(isLoadingContext);
+    const [survey_Province, setSurvey_Province] = useState([]);//if province is selected froom sidebar its value is changed and its total no of family from selected province
+    const [survey_District, setSurvey_District] = useState([]);//if district is selected froom sidebar its value is changed and its total no of family from selected district
+    const [survey_Muni, setSurvey_Muni] = useState([]);//if municipality is selected froom sidebar its value is changed and its total no of family from selected municipality
+    const [isprovinceselected, setIsprovinceselected] = useState(false);
+    const [isdistrictselected, setIsdistrictselected] = useState(false);//When a province is selected it gives option to show or hide district option in sidebar.
+    const [isdistrictfinallychoosen, setIsdistrictfinallychoosen] = useState(false);//when a district is selected it helps to display value
+    const [Covid_province, setCovid_province] = useState([]);
+    const [Covid_district, setCovid_district] = useState([]);
+    const [Covid_municipality, setCovid_Municipality] = useState([]);
+    const [Map_demo_province, setMap_demo_province] = useState([]);//used to set the value of selected district to plot on the map
+    const [Map_demo_district, setMap_demo_district] = useState([]);
+    const [Map_demo_municipality, setMap_demo_municipality] = useState([]);
+    const [ismunicipalityselected, setIsmunicipalityselected] = useState(false);
+    const [ismunicipalityfinallychoosen, setIsmunicipalityfinallychoosen] = useState(false);
+    const [selectedPerson, setselectedPerson] = useState(null);
+    const [viewport, setviewPort] = useState({
 
-    console.log("Dataa>>>", Data);
-    console.log("Water Resource available>>>", Water_resource_available);
-    console.log("Water Resource Unavailable>>>", Water_resource_unavailable);
-    console.log("Toilet available>>", Toilet_available);
-    console.log("toilet unavailable>>>", Toilet_unavailable);
-    console.log("wash facility available>>>", Wash_facility_available);
-    console.log("wash facility unavailable>>>", Wash_facility_unavailable);
-    console.log("sanitary pad available>>>", Sanitary_pad_available);
-    console.log("sanitary pad uavailable>>>", Sanitary_pad_unavailable);
-    console.log("total Pregnant>>>", Total_family_having_pregnant_mother);
-    console.log("Total male disabled family>>>", Total_male_disabled_family);
-    console.log("Total female disabled family>>>", Total_female_disabled_family);
-    console.log("Medical checkup available>>>", Medical_checkup_available);
-    console.log("medical checkup unavailable>>>", Medical_checkup_unavailable);
-    console.log("Total family in survey>>>", Total_Family_in_Survey);
-    console.log("total pregnant>>>", Total_number_of_pregnant_women);
-    console.log("total male disabled>>>", Total_male_disabled);
-    console.log("total female disabled>>>", Total_female_disabled);
+        latitude: 26.378177,
+        longitude: 85.366409,
+        width: "50vw",
+        height: "135vh",
+        zoom: 8
+    })
+    // 26.930519228980092,
+    // 85.68968070300077,
 
+    let Water_resource_available_province = isprovinceselected ? survey_Province.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length : Data.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length;
+    let Water_resource_available_district = isdistrictfinallychoosen ? survey_District.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length : Data.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length;
+    let water_resource_available_municipality = ismunicipalityfinallychoosen ? survey_Muni.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length : Data.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length;
+    let Water_resource_available_final = ismunicipalityfinallychoosen ? water_resource_available_municipality : isdistrictfinallychoosen ? Water_resource_available_district : Water_resource_available_province;
+    let Water_resource_available = isloading ? <p>Loading Data..</p> : Water_resource_available_final;
+    let water_resource_unavailable_final = ismunicipalityfinallychoosen ? survey_Muni.length - Water_resource_available_final : isdistrictfinallychoosen ? survey_District.length - Water_resource_available_final : Data.length - Water_resource_available_final;
+    let water_resource_unavailable = isloading ? <p>Loading Data..</p> : water_resource_unavailable_final;
+
+
+    let Toilet_available_province = isprovinceselected ? survey_Province.filter((item) => item.toilet === "छ").length : Data.filter((item) => item.toilet === "छ").length;
+    let Toilet_available_district = isdistrictfinallychoosen ? survey_District.filter((item) => item.toilet === "छ").length : Data.filter((item) => item.toilet === "छ").length;
+    let Toilet_available_municipality = ismunicipalityfinallychoosen ? survey_Muni.filter((item) => item.toilet === "छ").length : Data.filter((item) => item.toilet === "छ").length;
+    let Toilet_available_final = ismunicipalityfinallychoosen ? Toilet_available_municipality : isdistrictfinallychoosen ? Toilet_available_district : Toilet_available_province;
+    let Toilet_available = isloading ? <p>Loading Data..</p> : Toilet_available_final;
+
+    let Toilet_unavailable_province = isprovinceselected ? survey_Province.filter((item) => item.toilet === "छैन").length : Data.filter((item) => item.toilet === "छैन").length;
+    let Toilet_unavailable_district = isdistrictfinallychoosen ? survey_District.filter((item) => item.toilet === "छैन").length : Data.filter((item) => item.toilet === "छैन").length;
+    let Toilet_unavailable_municipality = ismunicipalityfinallychoosen ? survey_Muni.filter((item) => item.toilet === "छैन").length : Data.filter((item) => item.toilet === "छैन").length;
+    let Toilet_unavailable_final = ismunicipalityfinallychoosen ? Toilet_unavailable_municipality : isdistrictfinallychoosen ? Toilet_unavailable_district : Toilet_unavailable_province;
+    let Toilet_unavailable = isloading ? <p>Loading Data..</p> : Toilet_available_final;
+
+
+
+
+    let Wash_facility_available_province = isprovinceselected ? survey_Province.filter((item) => item.wash_facility === "छ").length : Data.filter((item) => item.wash_facility === "छ").length;
+    let Wash_facility_available_district = isdistrictfinallychoosen ? survey_District.filter((item) => item.wash_facility === "छ").length : Data.filter((item) => item.wash_facility === "छ").length;
+    let Wash_facility_available_municipality = ismunicipalityfinallychoosen ? survey_Muni.filter((item) => item.wash_facility === "छ").length : Data.filter((item) => item.wash_facility === "छ").length;
+    let Wash_facility_available_final = ismunicipalityfinallychoosen ? Wash_facility_available_municipality : isdistrictfinallychoosen ? Wash_facility_available_district : Wash_facility_available_province;
+    let Wash_facility_available = isloading ? <p>Loading Data..</p> : Wash_facility_available_final;
+
+    let Wash_facility_unavailable_province = isprovinceselected ? survey_Province.filter((item) => item.wash_facility === "छैन").length : Data.filter((item) => item.wash_facility === "छैन").length;
+    let Wash_facility_unavailable_district = isdistrictfinallychoosen ? survey_District.filter((item) => item.wash_facility === "छैन").length : Data.filter((item) => item.wash_facility === "छैन").length;
+    let Wash_facility_unavailable_municipality = ismunicipalityfinallychoosen ? survey_Muni.filter((item) => item.wash_facility === "छैन").length : Data.filter((item) => item.wash_facility === "छैन").length;
+    let Wash_facility_unavailable_final = ismunicipalityfinallychoosen ? Wash_facility_unavailable_municipality : isdistrictfinallychoosen ? Wash_facility_unavailable_district : Wash_facility_unavailable_province;
+    let Wash_facility_unavailable = isloading ? <p>Loading Data..</p> : Wash_facility_unavailable_final;
+
+
+    let Demo = [];
+    let Total_drycough = 0;
+    let total_data = [];
+    for (let i = 0; i < Data.length; i++) {
+
+        let data = Data[i]
+        //console.log(data);
+
+
+        data.wardcoordinate = Ward.filter((item) => Number(item.title) === data.ward).map((item) => item.centroid.coordinates);
+        data.provincecoordinate = Province.filter((item) => item.title_ne === data.province).map((item) => item.centroid.coordinates);
+        data.districtcoordinate = District.filter((item) => item.title_ne === data.district).map((item) => item.centroid.coordinates);
+        data.municipalitycoordinate = Municipality.filter((item) => item.title_ne === data.palika).map((item) => item.centroid.coordinates);
+        Demo.push(data)
+
+        for (let i = 0; i < data.family.length; i++) {
+            let data_family = data.family[i]
+            total_data.push(data_family);
+            if (data_family.dry_cough === "छ") {
+                Total_drycough += 1
+
+
+            }
+        }
+
+    }
+
+    let total_family_covid_data = [];//total family members in survey
+    for (let i = 0; i < Data.length; i++) {
+        let data = Data[i];
+
+        for (let i = 0; i < data.family.length; i++) {
+            let fam_data = data.family[i];
+            fam_data.province = Demo.filter((item) => item.id === fam_data.form).map((item) => item.province);
+            fam_data.district = Demo.filter((item) => item.id === fam_data.form).map((item) => item.district);
+            fam_data.municipality = Demo.filter((item) => item.id === fam_data.form).map((item) => item.palika);
+
+            total_family_covid_data.push(fam_data);
+        }
+    }
+
+    let Normal_fever_province = isprovinceselected ? Covid_province.filter((item) => item.temperature === "सामान्य (९६-९८.६ )").length : total_family_covid_data.filter((item) => item.temperature === "सामान्य (९६-९८.६ )").length;
+    let Normal_fever_District = isdistrictfinallychoosen ? Covid_district.filter((item) => item.temperature === "सामान्य (९६-९८.६ )").length : total_family_covid_data.filter((item) => item.temperature === "सामान्य (९६-९८.६ )").length;
+    let Normal_fever_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.temperature === "सामान्य (९६-९८.६ )").length : total_family_covid_data.filter((item) => item.temperature === "सामान्य (९६-९८.६ )").length;
+    let Normal_fever = ismunicipalityfinallychoosen ? Normal_fever_municipality : isdistrictfinallychoosen ? Normal_fever_District : Normal_fever_province;
+    let Normal_fever_final = isloading ? <p>Loading Data..</p> : Normal_fever;
+    let Fever_province = isprovinceselected ? Covid_province.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length : total_family_covid_data.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length;
+    let Fever_District = isdistrictfinallychoosen ? Covid_district.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length : total_family_covid_data.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length;
+    let Fever_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length : total_family_covid_data.filter((item) => item.temperature === "ज्वरो (९८.६ -१०२ )").length;
+    let Fever = ismunicipalityfinallychoosen ? Fever_municipality : isdistrictfinallychoosen ? Fever_District : Fever_province;
+    let Fever_final = isloading ? <p>Loading Data..</p> : Fever;
+
+    let High_fever_province = isprovinceselected ? Covid_province.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length : total_family_covid_data.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length;
+    let High_fever_district = isdistrictfinallychoosen ? Covid_district.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length : total_family_covid_data.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length;
+    let High_fever_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length : total_family_covid_data.filter((item) => item.temperature === "उच्च ज्वरो (१०२+)").length;
+    let High_fever = ismunicipalityfinallychoosen ? High_fever_municipality : isdistrictfinallychoosen ? High_fever_district : High_fever_province;
+    let High_fever_final = isloading ? <p>Loading Data..</p> : High_fever;
+
+    let Dry_Cough_province = isprovinceselected ? Covid_province.filter((item) => item.dry_cough === "छ").length : total_family_covid_data.filter((item) => item.dry_cough === "छ").length;
+    let Dry_Cough_district = isdistrictfinallychoosen ? Covid_district.filter((item) => item.dry_cough === "छ").length : total_family_covid_data.filter((item) => item.dry_cough === "छ").length;
+    let Dry_Cough_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.dry_cough === "छ").length : total_family_covid_data.filter((item) => item.dry_cough === "छ").length;
+    let Dry_Cough = ismunicipalityfinallychoosen ? Dry_Cough_municipality : isdistrictfinallychoosen ? Dry_Cough_district : Dry_Cough_province;
+    let Dry_Cough_final = isloading ? <p>Loading Data..</p> : Dry_Cough;
+
+    let Breathing_problem_province = isprovinceselected ? Covid_province.filter((item) => item.breath_problem === "छ").length : total_family_covid_data.filter((item) => item.breath_problem === "छ").length;
+    let Breathing_problem_district = isdistrictfinallychoosen ? Covid_district.filter((item) => item.breath_problem === "छ").length : total_family_covid_data.filter((item) => item.breath_problem === "छ").length;
+    let Breathing_problem_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.breath_problem === "छ").length : total_family_covid_data.filter((item) => item.breath_problem === "छ").length;
+    let Breathing_problem = ismunicipalityfinallychoosen ? Breathing_problem_municipality : isdistrictfinallychoosen ? Breathing_problem_district : Breathing_problem_province;
+    let Breathing_problem_final = isloading ? <p>Loading Data..</p> : Breathing_problem;
+
+    let Tiredness_province = isprovinceselected ? Covid_province.filter((item) => item.tiredness === "छ").length : total_family_covid_data.filter((item) => item.tiredness === "छ").length;
+    let Tiredness_district = isdistrictfinallychoosen ? Covid_district.filter((item) => item.tiredness === "छ").length : total_family_covid_data.filter((item) => item.tiredness === "छ").length;
+    let Tiredness_municipality = ismunicipalityfinallychoosen ? Covid_municipality.filter((item) => item.tiredness === "छ").length : total_family_covid_data.filter((item) => item.tiredness === "छ").length;
+    let Tiredness = ismunicipalityfinallychoosen ? Tiredness_municipality : isdistrictfinallychoosen ? Tiredness_district : Tiredness_province;
+    let Tiredness_final = isloading ? <p>Loading Data..</p> : Tiredness;
+
+    //selects all province and removes dublicate province 
+    let Select_province = Array.from(new Set(Data.filter((item) => item.province).map((item) => item.province))).map((province) => Data.find((item) => item.province === province));
+    let Select_district = Array.from(new Set(survey_Province.filter((item) => item.district).map((item) => item.district))).map((district) => survey_Province.find((item) => item.district === district));
+    let Select_municipality = Array.from(new Set(survey_District.filter((item) => item.palika).map((item) => item.palika))).map((palika) => survey_District.find((item) => item.palika === palika));
+
+    const handleProvince = (e) => {
+        if (e.target.value === "Showing Overall Data") {
+            setSurvey_Province(Data.filter((item) => item.province))
+            setIsdistrictselected(false)
+            setIsmunicipalityselected(false)
+            setIsprovinceselected(false)
+        }
+        else if (e.target.value !== "Showing Overall Data") {
+
+            setSurvey_Province(Data.filter((item) => item.province === e.target.value))
+            setCovid_province(total_family_covid_data.filter((item) => item.province[0] === e.target.value))
+            setMap_demo_province(Demo.filter((item) => item.province === e.target.value))
+            setIsprovinceselected(true);
+            setIsdistrictselected(true);
+            setIsdistrictfinallychoosen(false);
+            setIsmunicipalityfinallychoosen(false);
+
+        }
+
+        console.log("target value>>>", e.target.value);
+        console.log("elements>>>", survey_Province);
+    }
+
+    console.log("value>>>>>", survey_Province);
+    const handleDistrict = (e) => {
+
+        if (e.target.value) {
+            setSurvey_District(survey_Province.filter((item) => item.district === e.target.value))
+            setCovid_district(total_family_covid_data.filter((item) => item.district[0] === e.target.value))
+            setIsdistrictfinallychoosen(true);
+            setMap_demo_district(Map_demo_province.filter((item) => item.district === e.target.value))
+            setIsmunicipalityfinallychoosen(false)
+            setIsmunicipalityselected(true)
+
+        }
+
+    }
+    console.log("demo district map>>>", Map_demo_district);
+    const handleMunicipality = (e) => {
+        if (e.target.value) {
+            setSurvey_Muni(survey_District.filter((item) => item.palika === e.target.value))
+            setCovid_Municipality(Covid_district.filter((item) => item.municipality[0] === e.target.value))
+            setMap_demo_municipality(Map_demo_district.filter((item) => item.palika === e.target.value))
+            setIsmunicipalityfinallychoosen(true);
+
+
+        }
+    }
+
+
+    const points = Demo.map(item => ({
+        type: "Feature",
+        properties: {
+            cluster: false,
+            crimeId: item.id,
+            category: item.district
+        },
+        geometry: { type: "Point", coordinates: item.districtcoordinate[0] }
+
+    }))
+
+    let Map_province = isprovinceselected ? Map_demo_province.map(item => ({
+        type: "Feature",
+        properties: {
+            cluster: false,
+            crimeId: item.id,
+            category: item.district
+        },
+        geometry: { type: "Point", coordinates: item.provincecoordinate[0] }
+
+    })) : Demo.map(item => ({
+        type: "Feature",
+        properties: {
+            cluster: false,
+            crimeId: item.id,
+            category: item.district
+        },
+        geometry: { type: "Point", coordinates: item.provincecoordinate[0] }
+
+    }))
+    let Map_district = isdistrictfinallychoosen ? Map_demo_district.map(item => ({
+        type: "Feature",
+        properties: {
+            cluster: false,
+            crimeId: item.id,
+            category: item.district
+        },
+        geometry: { type: "Point", coordinates: item.districtcoordinate[0] }
+
+    })) : Demo.map(item => ({
+        type: "Feature",
+        properties: {
+            cluster: false,
+            crimeId: item.id,
+            category: item.district
+        },
+        geometry: { type: "Point", coordinates: item.provincecoordinate[0] }
+
+    }))
+    let Map_municipality = ismunicipalityfinallychoosen ? Map_demo_municipality.map(item => ({
+        type: "Feature",
+        properties: {
+            cluster: false,
+            crimeId: item.id,
+            category: item.district
+        },
+        geometry: { type: "Point", coordinates: item.municipalitycoordinate[0] }
+
+    })) : Demo.map(item => ({
+        type: "Feature",
+        properties: {
+            cluster: false,
+            crimeId: item.id,
+            category: item.district
+        },
+        geometry: { type: "Point", coordinates: item.provincecoordinate[0] }
+
+    }))
+    let Map = ismunicipalityfinallychoosen ? Map_municipality : isdistrictfinallychoosen ? Map_district : Map_province;
+
+
+    console.log("finaltest>>>>", Map);
+    console.log("demo", Demo);
 
     return (
         <div>
             <Header />
             {/* Main Sidebar Container */}
-            <aside className="main-sidebar sidebar-dark-primary elevation-4">
+            < aside className="main-sidebar sidebar-grey-primary elevation-4 test" >
                 {/* Brand Logo */}
-                <a href="index3.html" className="brand-link">
-                    <img src="oxfam.jpg" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
+                < a href="index3.html" className="brand-link" >
+                    <img src="oxfam.jpg" alt="oxfam Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
                     <span className="brand-text font-weight-light">Oxfam</span>
-                </a>
+                </a >
+
                 {/* Sidebar */}
-                <div className="sidebar">
+                < div className="sidebar" >
                     {/* Sidebar Menu */}
-                    <nav className="mt-2">
+
+                    < nav className="mt-2" >
+
+
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             {/* Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library */}
+                            <div className="radio">
+                                <label> <input type="radio" defaultChecked /> Province Level Data</label>
+                            </div>
+
                             <li className="nav-item has-treeview menu-open">
-                                <a href="#" className="nav-link active">
-                                    <i className="nav-icon fas fa-tachometer-alt" />
-                                    <p>
-                                        Province Level Data
-                <i className="right fas fa-angle-left" />
-                                    </p>
-                                </a>
-                                <ul className="nav nav-treeview">
-                                    <li className="nav-item">
-                                        <Link to="/overall-data" className="nav-link active">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Overall Data</p>
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to="/province1" className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Province 1</p>
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to="/province2" href="./index2.html" className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Province 2</p>
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to="/bagmati" className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Bagmati</p>
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to="/gandaki" className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Gandaki</p>
-                                        </Link >
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to="/province5" className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Province 5</p>
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to="/karnali" href="./index2.html" className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Karnali</p>
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to="/sudurpaschim" href="./index2.html" className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Sudurpaschim</p>
-                                        </Link>
-                                    </li>
-                                </ul>
+                                <select className="form-control" onClick={handleProvince}>
+                                    <option value="Showing Overall Data">Showing Overall Data</option>
+                                    {Select_province.map((item, id) => <option key={id} value={item.province}>Province 2</option>)}
+
+                                </select>
                             </li>
+                            <br />
+                            {isdistrictselected ? <li className="nav-item has-treeview menu-open">
+                                <select className="form-control" onClick={handleDistrict}>
+                                    <option value="select district">Select District</option>
+                                    {Select_district.map((item, id) => <option key={id} value={item.district}>{item.district}</option>)}
+
+                                </select>
+                            </li>
+                                : ''
+
+                            }
+                            <br />
+                            {ismunicipalityselected ?
+                                <li className="nav-item has-treeview menu-open">
+                                    <select className="form-control" onClick={handleMunicipality}>
+                                        <option>Select Municipality</option>
+                                        {Select_municipality.map((item, id) => <option key={id} value={item.palika}>{item.palika}</option>)}
+                                    </select>
+                                </li>
+                                : ''
+                            }
+
                         </ul>
-                    </nav>
+                    </nav >
                     {/* /.sidebar-menu */}
-                </div>
+                </div >
                 {/* /.sidebar */}
-            </aside>
+            </aside >
 
             {/* Control Sidebar */}
-            <aside className="control-sidebar control-sidebar-dark">
+            < aside className="control-sidebar control-sidebar-dark" >
                 {/* Control sidebar content goes here */}
-            </aside>
+            </aside >
             {/* /.control-sidebar */}
             {/* Content Wrapper. Contains page content */}
             <div className="content-wrapper">
@@ -146,23 +360,133 @@ export default function Dashboard() {
                 {/* Main content */}
                 <section className="content">
                     <div className="container-fluid">
+
                         <div className="row">
                             {/* Left col */}
+                            <div className="col-md-4">
 
-                            <div className="col-md-7">
+                                <div className="card">
+                                    <div className="card-header">
+                                        {ismunicipalityfinallychoosen ? <h3 className="card-title text-muted"><b>Province-2:Municipality Detail</b></h3> : isdistrictfinallychoosen ? <h3 className="card-title text-muted"><b>Province-2 District Detail</b></h3>
+                                            : isprovinceselected ? <h3 className="card-title text-muted"><b>Province-2 Detail</b></h3> : <h3 className="card-title text-muted"><b>Showing Overall Data</b></h3>}
+
+                                    </div>
+                                    {/* /.card-header */}
+                                    <div className="card-body">
+                                        <div id="accordion" >
+                                            {/* we are adding the .class so bootstrap.js collapse plugin detects it */}
+
+
+                                            <p className="text-success"><b>Water Resources</b></p>
+                                            <hr />
+                                            <div className="row">
+                                                <p className="survey-data">Available</p>
+                                                <p className="number">{Water_resource_available}</p>
+                                            </div>
+                                            <div className="row">
+                                                <p className="survey-data">Unavailable</p>
+                                                <p className="number">{water_resource_unavailable}</p>
+                                            </div>
+
+                                            <hr />
+                                            <p className="text-success"><b>Toilet</b></p>
+                                            <hr />
+                                            <div className="row">
+                                                <p className="survey-data">Available</p>
+                                                <p className="number">{Toilet_available}</p>
+                                            </div>
+                                            <div className="row">
+                                                <p className="survey-data">Unavailable</p>
+                                                <p className="number">{Toilet_unavailable}</p>
+                                            </div>
+                                            <hr />
+                                            <p className="text-success"><b>Wash Facility</b></p>
+                                            <hr />
+                                            <div className="row">
+                                                <p className="survey-data">Available</p>
+                                                <p className="number">{Wash_facility_available}</p>
+                                            </div>
+                                            <div className="row">
+                                                <p className="survey-data">Unavailable</p>
+                                                <p className="number">{Wash_facility_unavailable}</p>
+                                            </div>
+                                            <hr />
+                                            <p className="text-success"><b>COVID Details</b></p>
+
+                                            <hr />
+                                            <div className="row">
+                                                <p className="survey-data">Normal Fever</p>
+                                                <p className="number">{Normal_fever_final}</p>
+                                            </div>
+                                            <div className="row">
+                                                <p className="survey-data">Fever</p>
+                                                <p className="number">{Fever_final}</p>
+                                            </div>
+                                            <div className="row">
+                                                <p className="survey-data">High Fever</p>
+                                                <p className="number">{High_fever_final}</p>
+                                            </div>
+                                            <div className="row">
+                                                <p className="survey-data">Dry Cough</p>
+                                                <p className="number">{Dry_Cough_final}</p>
+                                            </div>
+                                            <div className="row">
+                                                <p className="survey-data">Breathing Problem</p>
+                                                <p className="number">{Breathing_problem_final}</p>
+                                            </div>
+                                            <div className="row">
+                                                <p className="survey-data">Tiredness</p>
+                                                <p className="number">{Tiredness_final}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-8">
                                 {/* MAP & BOX PANE */}
                                 <div className="card">
                                     <div className="card-header">
-                                        <h3 className="card-title">Overall Country Data</h3>
+                                        {ismunicipalityfinallychoosen ? <h3 className="card-title"><b>Province-2: Municipality Survey Data</b></h3> : isdistrictfinallychoosen ? <h3 className="card-title"><b>Province-2: District Survey Data</b></h3>
+                                            : isprovinceselected ? <h3 className="card-title"><b>Province-2: Survey Data</b></h3> : <h3 className="card-title"><b>Showing Overall Survey Data</b></h3>}
                                     </div>
                                     {/* /.card-header */}
                                     <div className="card-body p-0">
                                         <div className="d-md-flex">
                                             <div className="p-1 flex-fill" style={{ overflow: 'hidden' }}>
                                                 {/* Map will be created here */}
-                                                <div id="world-map-markers" style={{ height: 600, overflow: 'hidden' }}>
+                                                <div id="world-map-markers" style={{ height: 840, overflow: 'hidden' }}>
                                                     <div className="map" />
-                                                    <Map />
+                                                    <ReactMapGl className="map-react" {...viewport} mapboxApiAccessToken='pk.eyJ1IjoibmFiYW5pdCIsImEiOiJja2E4MXR3NDkwNGMxMzJzOWF4Zzk1cmRxIn0.PlAUDME-BUb9gV-DCutXzw' mapStyle='mapbox://styles/mapbox/light-v10'
+                                                        onViewportChange={(viewport) => setviewPort(viewport)} maxZoom={20} >
+
+
+                                                        {Map.map((item, id) => (
+                                                            <Marker key={id}
+                                                                latitude={item.geometry.coordinates[1]}
+                                                                longitude={item.geometry.coordinates[0]}
+                                                            >
+                                                                <button type="button" className="btn btn-primary btn-circle btn-sm" onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    setselectedPerson(item);
+                                                                    console.log("Person selected>>>", selectedPerson);
+                                                                }}>{ismunicipalityfinallychoosen ? Map_demo_municipality.length : isdistrictfinallychoosen ? Map_demo_district.length : Data.length}</button>
+                                                            </Marker>
+                                                        ))}
+                                                        {/** {selectedPerson ? (
+                                                            <Popup latitude={selectedPerson.geometry.coordinates} longitude={selectedPerson.geometry.coordinates}
+                                                                onClose={() => (setselectedPerson(null))}>
+
+
+
+                                                                <div className="btn btn-success popup">
+
+                                                                    <p>Age={selectedPerson.properties.category}</p>
+                                                                    <p>Gender={selectedPerson.properties.crimeId}</p>
+
+                                                                </div>
+                                                            </Popup>
+                                                        ) : null}
+                            */}                             </ReactMapGl>
                                                 </div>
                                             </div>
 
@@ -170,62 +494,7 @@ export default function Dashboard() {
                                     </div>
                                     {/* /.card-body */}
                                 </div>
-
-
                             </div>
-                            <div className="col-md-5">
-                                <div className="card">
-                                    <div className="card-header">
-                                        <h3 className="card-title">
-                                            <i className="fas fa-text-width" />
-        Overall Country Data
-      </h3>
-                                    </div>
-                                    {/* /.card-header */}
-                                    <div className="card-body">
-                                        <div className="info-box mb-3 bg-success">
-                                            <div className="info-box-content">
-                                                <span className="info-box-text"><li>Water Resource Available: <span><b>{Water_resource_available}</b></span></li></span>
-                                                <span className="info-box-text"><li>Water Resource Unavailable: <span><b>{Water_resource_unavailable}</b></span></li></span>
-                                                <span className="info-box-text"><li>Toilet Avaliable: <span><b>{Toilet_available}</b></span></li></span>
-                                                <span className="info-box-text"><li>Toilet Unavailable: <span><b>{Toilet_unavailable}</b></span></li></span>
-                                                <span className="info-box-text"><li>Wash Facility available: <span><b>{Wash_facility_available}</b></span></li></span>
-                                                <span className="info-box-text"><li>Wash Facility unavailable: <span><b>{Wash_facility_unavailable}</b></span></li></span>
-                                                <span className="info-box-text"><li>sanitary Pad Available: <span><b>{Sanitary_pad_available}</b></span></li></span>
-                                                <span className="info-box-text"><li>sanitary Pad Unavailable: <span><b>{Sanitary_pad_unavailable}</b></span></li></span>
-                                                <span className="info-box-text"><li>Total Pregnant Women: <span><b>{Total_number_of_pregnant_women}</b></span></li></span>
-                                                <span className="info-box-text"><li>Total Family having Pregnant Women: <span><b>{Total_family_having_pregnant_mother}</b></span></li></span>
-                                                <span className="info-box-text"><li>Total Disable Male: <span><b>{Total_male_disabled}</b></span></li></span>
-                                                <span className="info-box-text"><li>Total Male Disabled Family: <span><b>{Total_male_disabled_family}</b></span></li></span>
-                                                <span className="info-box-text"><li>Total Disable Female: <span><b>{Total_female_disabled}</b></span></li></span>
-                                                <span className="info-box-text"><li>Total Female Disabled Family: <span><b>{Total_female_disabled_family}</b></span></li></span>
-                                                <span className="info-box-text"><li>Medical Checkup available: <span><b>{Medical_checkup_available}</b></span></li></span>
-                                                <span className="info-box-text"><li>Medical Checkup unavailable: <span><b>{Medical_checkup_unavailable}</b></span></li></span>
-                                                <span className="info-box-text"><li>Total Family in survey: <span><b>{Total_Family_in_Survey}</b></span></li></span>
-                                                <span className="info-box-text"><b><u>COVID CASES DETAILS</u></b></span>
-                                                <span className="info-box-text"><li>Total Normal Fever सामान्य (९६-९८.६ ): <span><b>1228</b></span></li></span>
-                                                <span className="info-box-text"><li>Total Fever ज्वरो (९८.६ -१०२ ): <span><b>12</b></span></li></span>
-                                                <span className="info-box-text"><li>Total High Fever उच्च ज्वरो (१०२+): <span><b>1</b></span></li></span>
-                                                <span className="info-box-text"><li>Total People Having Drycough: <span><b>32</b></span></li></span>
-                                                <span className="info-box-text"><li>Total People not having Drycough: <span><b>1209</b></span></li></span>
-                                                <span className="info-box-text"><li>Total People having Breathe Problem: <span><b>25</b></span></li></span>
-                                                <span className="info-box-text"><li>Total People not having Breathe Problem:<span><b>1216</b></span></li></span>
-                                                <span className="info-box-text"><li>Total People having Tiredness:<span><b>219</b></span></li></span>
-                                                <span className="info-box-text"><li>Total People not having Tiredness:<span><b>1022</b></span></li></span>
-                                                <span className="info-box-text"><li>Total Family Members in COVID19 Survey:<span><b>1241</b></span></li></span>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    {/* /.card-body */}
-                                </div>
-                                {/* /.card */}
-                            </div>
-                            {/* ./col */}
-
-                            {/* /.col */}
                         </div>
                         {/* /.row */}
                     </div>{/*/. container-fluid */}
@@ -235,6 +504,6 @@ export default function Dashboard() {
             {/* /.content-wrapper */}
 
             <Footer />
-        </div>
+        </div >
     )
 }

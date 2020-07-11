@@ -8,55 +8,36 @@ import { DataContext } from '../Store';
 
 export default function Province2() {
     const [Data, setData] = useContext(DataContext);
+
     const [survey_Dist, setSurvey_Dist] = useState([]);
     const [survey_Muni, setSurvey_Muni] = useState([]);
+    const [survey_ward, setSurvey_ward] = useState([]);
 
     const [isdistrictselected, setIsdistrictselected] = useState(false);
     const [ismunicipalityselected, setIsmunicipalityselected] = useState(false);
     const [municipalityFinallychooosen, setMunicipalityFinallychoosen] = useState(false);
+    const [isWardselected, setIsWardselected] = useState(false);
+    const [wardFinallychoosen, setWardFinallychoosen] = useState(false);
 
-    let Water_resource_available1 = isdistrictselected ? survey_Dist.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length : Data.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length;
-    let Water_resource_available2 = municipalityFinallychooosen ? survey_Muni.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length : Data.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length;
-    let Water_resource_available_final = municipalityFinallychooosen ? Water_resource_available2 : Water_resource_available1;
-    let Water_resource_unavailable1 = isdistrictselected ? survey_Dist.length - Water_resource_available_final : Data.length - Water_resource_available_final;
-    let Water_resource_unavailable2 = municipalityFinallychooosen ? survey_Muni.length - Water_resource_available_final : Data.length - Water_resource_available_final;
-    let water_resource_unavailable_final = municipalityFinallychooosen ? Water_resource_unavailable2 : Water_resource_unavailable1;
-    let Toilet_available1 = isdistrictselected ? survey_Dist.filter((item) => item.toilet === "छ").length : Data.filter((item) => item.toilet === "छ").length;
-    let Toilet_available2 = municipalityFinallychooosen ? survey_Muni.filter((item) => item.toilet === "छ").length : Data.filter((item) => item.toilet === "छ").length;
-    let Toilet_available_final = municipalityFinallychooosen ? Toilet_available2 : Toilet_available1;
-    let Toilet_unavailable1 = isdistrictselected ? survey_Dist.length - Toilet_available_final : Data.length - Toilet_available_final;
-    let Toilet_unavailable2 = municipalityFinallychooosen ? survey_Muni.length - Toilet_available_final : Data.length - Toilet_available_final;
-    let Toilet_unavailable_final = municipalityFinallychooosen ? Toilet_unavailable2 : Toilet_unavailable1;
-    let Wash_facility_available1 = isdistrictselected ? survey_Dist.filter((item) => item.wash_facility === "छ").length : Data.filter((item) => item.wash_facility === "छ").length;
-    let Wash_facility_available2 = municipalityFinallychooosen ? survey_Muni.filter((item) => item.wash_facility === "छ").length : Data.filter((item) => item.wash_facility === "छ").length;
-    let Wash_facility_available_final = municipalityFinallychooosen ? Wash_facility_available2 : Wash_facility_available1;
-    let Wash_facility_unavailable1 = isdistrictselected ? survey_Dist.length - Wash_facility_available_final : Data.length - Wash_facility_available_final;
-    let Wash_facility_unavailable2 = municipalityFinallychooosen ? survey_Muni.length - Wash_facility_available_final : Data.length - Wash_facility_available_final;
-    let Wash_facility_unavailable_final = municipalityFinallychooosen ? Wash_facility_unavailable2 : Wash_facility_unavailable1;
-    let Sanitary_pad_available1 = isdistrictselected ? survey_Dist.filter((item) => item.sanitary_pad_available === "छ").length : Data.filter((item) => item.sanitary_pad_available === "छ").length;
-    let Sanitary_pad_available2 = municipalityFinallychooosen ? survey_Muni.filter((item) => item.sanitary_pad_available === "छ").length : Data.filter((item) => item.sanitary_pad_available === "छ").length;
-    let Sanitary_pad_available_final = municipalityFinallychooosen ? Sanitary_pad_available2 : Sanitary_pad_available1;
-    let Sanitary_pad_unavailable1 = isdistrictselected ? survey_Dist.length - Sanitary_pad_available_final : Data.length - Sanitary_pad_available_final;
-    let Sanitary_pad_unavailable2 = municipalityFinallychooosen ? survey_Muni.length - Sanitary_pad_available_final : Data.length - Sanitary_pad_available_final;
-    let Sanitary_pad_unavailable_final = municipalityFinallychooosen ? Sanitary_pad_unavailable2 : Sanitary_pad_unavailable1;
-    let Total_family_having_pregnant_mother1 = isdistrictselected ? survey_Dist.filter((item) => item.total_pregnant !== 0).length : Data.filter((item) => item.total_pregnant !== 0).length;
-    let Total_family_having_pregnant_mother2 = municipalityFinallychooosen ? survey_Muni.filter((item) => item.total_pregnant !== 0).length : Data.filter((item) => item.total_pregnant !== 0).length;
-    let Total_family_having_pregnant_mother_final = municipalityFinallychooosen ? Total_family_having_pregnant_mother2 : Total_family_having_pregnant_mother1;
-    let Total_male_disabled_family1 = isdistrictselected ? survey_Dist.filter((item) => item.total_male_disabled !== 0).length : Data.filter((item) => item.total_male_disabled !== 0).length;
-    let Total_male_disabled_family2 = municipalityFinallychooosen ? survey_Muni.filter((item) => item.total_male_disabled !== 0).length : Data.filter((item) => item.total_male_disabled !== 0).length;
-    let Total_male_disabled_family_final = municipalityFinallychooosen ? Total_male_disabled_family2 : Total_male_disabled_family1;
-    let Total_female_disabled_family1 = isdistrictselected ? survey_Dist.filter((item) => item.total_female_disabled !== 0).length : Data.filter((item) => item.total_female_disabled !== 0).length;
-    let Total_female_disabled_family2 = municipalityFinallychooosen ? survey_Muni.filter((item) => item.total_female_disabled !== 0).length : Data.filter((item) => item.total_female_disabled !== 0).length;
-    let Total_female_disabled_family_final = municipalityFinallychooosen ? Total_female_disabled_family2 : Total_female_disabled_family1;
-    let Medical_checkup_available1 = isdistrictselected ? survey_Dist.filter((item) => item.medical_checkup === "छ").length : Data.filter((item) => item.medical_checkup === "छ").length;
-    let Medical_checkup_available2 = municipalityFinallychooosen ? survey_Muni.filter((item) => item.medical_checkup === "छ").length : Data.filter((item) => item.medical_checkup === "छ").length;
-    let Medical_checkup_available_final = municipalityFinallychooosen ? Medical_checkup_available2 : Medical_checkup_available1;
-    let Medical_checkup_unavailable1 = isdistrictselected ? survey_Dist.length - Medical_checkup_available_final : Data.length - Medical_checkup_available_final;
-    let Medical_checkup_unavailable2 = municipalityFinallychooosen ? survey_Muni.length - Medical_checkup_available_final : Data.length - Medical_checkup_available_final;
-    let Medical_checkup_unavailable_final = municipalityFinallychooosen ? Medical_checkup_unavailable2 : Medical_checkup_unavailable1;
-    let Total_Family_in_Survey1 = isdistrictselected ? survey_Dist.length : Data.length;
-    let Total_Family_in_Survey2 = municipalityFinallychooosen ? survey_Muni.length : Data.length;
-    let Total_Family_in_Survey_final = municipalityFinallychooosen ? Total_Family_in_Survey2 : Total_Family_in_Survey1;
+
+    let Water_resource_available_final = municipalityFinallychooosen ? survey_Muni.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length : isdistrictselected ? survey_Dist.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length : Data.filter((item) => item.water_resource === "व्यक्तिगत चापा कल (टयुबवेल)" || "सामुदायीक चापाकल (टयुबवेल)" || "अन्य" || "प्रणालीगत खानेपानी").length;
+    let water_resource_unavailable_final = municipalityFinallychooosen ? survey_Muni.length - Water_resource_available_final : isdistrictselected ? survey_Dist.length - Water_resource_available_final : Data.length - Water_resource_available_final;
+    let Toilet_available_final = municipalityFinallychooosen ? survey_Muni.filter((item) => item.toilet === "छ").length : isdistrictselected ? survey_Dist.filter((item) => item.toilet === "छ").length : Data.filter((item) => item.toilet === "छ").length;
+    let Toilet_unavailable_final = municipalityFinallychooosen ? survey_Muni.length - Toilet_available_final : isdistrictselected ? survey_Dist.length - Toilet_available_final : Data.length - Toilet_available_final;
+    let Wash_facility_available_final = municipalityFinallychooosen ? survey_Muni.filter((item) => item.wash_facility === "छ").length : isdistrictselected ? survey_Dist.filter((item) => item.wash_facility === "छ").length : Data.filter((item) => item.wash_facility === "छ").length;
+    let Wash_facility_unavailable_final = municipalityFinallychooosen ? survey_Muni.length - Wash_facility_available_final : isdistrictselected ? survey_Dist.length - Wash_facility_available_final : Data.length - Wash_facility_available_final;
+    let Sanitary_pad_available_final = municipalityFinallychooosen ? survey_Muni.filter((item) => item.sanitary_pad_available === "छ").length : isdistrictselected ? survey_Dist.filter((item) => item.sanitary_pad_available === "छ").length : Data.filter((item) => item.sanitary_pad_available === "छ").length;
+    let Sanitary_pad_unavailable_final = municipalityFinallychooosen ? survey_Muni.length - Sanitary_pad_available_final : isdistrictselected ? survey_Dist.length - Sanitary_pad_available_final : Data.length - Sanitary_pad_available_final;
+    let Total_family_having_pregnant_mother_final = municipalityFinallychooosen ? survey_Muni.filter((item) => item.total_pregnant !== 0).length : isdistrictselected ? survey_Dist.filter((item) => item.total_pregnant !== 0).length : Data.filter((item) => item.total_pregnant !== 0).length;
+    let Total_male_disabled_family_final = municipalityFinallychooosen ? survey_Muni.filter((item) => item.total_male_disabled !== 0).length : isdistrictselected ? survey_Dist.filter((item) => item.total_male_disabled !== 0).length : Data.filter((item) => item.total_male_disabled !== 0).length;
+    let Total_female_disabled_family_final = municipalityFinallychooosen ? survey_Muni.filter((item) => item.total_female_disabled !== 0).length : isdistrictselected ? survey_Dist.filter((item) => item.total_female_disabled !== 0).length : Data.filter((item) => item.total_female_disabled !== 0).length;
+    let Medical_checkup_available_final = municipalityFinallychooosen ? survey_Muni.filter((item) => item.medical_checkup === "छ").length : isdistrictselected ? survey_Dist.filter((item) => item.medical_checkup === "छ").length : Data.filter((item) => item.medical_checkup === "छ").length;
+    let Medical_checkup_unavailable_final = municipalityFinallychooosen ? survey_Muni.length - Medical_checkup_available_final : isdistrictselected ? survey_Dist.length - Medical_checkup_available_final : Data.length - Medical_checkup_available_final;
+    let Total_Family_in_Survey_final = municipalityFinallychooosen ? survey_Muni.length : isdistrictselected ? survey_Dist.length : Data.length;
+    //total pregnant women in whole survey
+    let Total_number_of_pregnant_women_final = municipalityFinallychooosen ? survey_Muni.reduce((prev, curr) => prev + curr.total_pregnant, 0) : isdistrictselected ? survey_Dist.reduce((prev, curr) => prev + curr.total_pregnant, 0) : Data.reduce((prev, curr) => prev + curr.total_pregnant, 0);
+    let Total_male_disabled_final = municipalityFinallychooosen ? survey_Muni.reduce((prev, curr) => prev + curr.total_male_disabled, 0) : isdistrictselected ? survey_Dist.reduce((prev, curr) => prev + curr.total_male_disabled, 0) : Data.reduce((prev, curr) => prev + curr.total_male_disabled, 0);
+    let Total_female_disabled_final = municipalityFinallychooosen ? survey_Muni.reduce((prev, curr) => prev + curr.total_female_disabled, 0) : isdistrictselected ? survey_Dist.reduce((prev, curr) => prev + curr.total_female_disabled, 0) : Data.reduce((prev, curr) => prev + curr.total_female_disabled, 0);
 
 
 
@@ -66,24 +47,9 @@ export default function Province2() {
     let select_Municipality = Array.from(new Set(survey_Dist.map((item) => item.palika))).map((palika) => survey_Dist.find((item) => item.palika === palika));
 
 
-    //total pregnant women in whole survey
-    let Total_number_of_pregnant_women1 = isdistrictselected ? survey_Dist.reduce((prev, curr) => prev + curr.total_pregnant, 0) : Data.reduce((prev, curr) => prev + curr.total_pregnant, 0);
-    let Total_number_of_pregnant_women2 = municipalityFinallychooosen ? survey_Muni.reduce((prev, curr) => prev + curr.total_pregnant, 0) : Data.reduce((prev, curr) => prev + curr.total_pregnant, 0);
-    let Total_number_of_pregnant_women_final = municipalityFinallychooosen ? Total_number_of_pregnant_women2 : Total_number_of_pregnant_women1;
-    let Total_male_disabled1 = isdistrictselected ? survey_Dist.reduce((prev, curr) => prev + curr.total_male_disabled, 0) : Data.reduce((prev, curr) => prev + curr.total_male_disabled, 0);
-    let Total_male_disabled2 = municipalityFinallychooosen ? survey_Muni.reduce((prev, curr) => prev + curr.total_male_disabled, 0) : Data.reduce((prev, curr) => prev + curr.total_male_disabled, 0);
-    let Total_male_disabled_final = municipalityFinallychooosen ? Total_male_disabled2 : Total_male_disabled1;
-    let Total_female_disabled1 = isdistrictselected ? survey_Dist.reduce((prev, curr) => prev + curr.total_female_disabled, 0) : Data.reduce((prev, curr) => prev + curr.total_female_disabled, 0);
-    let Total_female_disabled2 = municipalityFinallychooosen ? survey_Muni.reduce((prev, curr) => prev + curr.total_female_disabled, 0) : Data.reduce((prev, curr) => prev + curr.total_female_disabled, 0);
-    let Total_female_disabled_final = municipalityFinallychooosen ? Total_female_disabled2 : Total_female_disabled1;
 
+    console.log("municipality", survey_Muni);
 
-    console.log("output>>>", Select_District);
-    console.log("data>>>", Data);
-    console.log("total pregnant>>>", Total_number_of_pregnant_women_final);
-    console.log("total male disabled>>>", Total_male_disabled_final);
-    console.log("total female disabled>>>", Total_female_disabled_final);
-    console.log("municipality list>>>", select_Municipality);
 
     const handleDistrict = (e) => {
         if (e.target.value) {
@@ -97,49 +63,34 @@ export default function Province2() {
     const handleMunicipality = (e) => {
         (setSurvey_Muni(survey_Dist.filter((item) => item.palika === e.target.value)))
         setMunicipalityFinallychoosen(true)
+        setIsWardselected(true)
+        setWardFinallychoosen(true)
     }
-    let Data_header = isdistrictselected ?
-        <h3 className="card-title">
-            <i className="fas fa-text-width" />
-        Province 2 District Data
-      </h3>
-        : <h3 className="card-title">
-            <i className="fas fa-text-width" />
-        Province 2 Data
-      </h3>
+
+    const handleWard = (e) => {
+        (setSurvey_ward(survey_Muni.filter((item) => item.ward === e.target.value)))
+        setWardFinallychoosen(true)
+    }
 
     let Demo = isdistrictselected ? survey_Dist.length : Data.length;
     let Demo2 = municipalityFinallychooosen ? survey_Muni.length : Data.length;
     let To = municipalityFinallychooosen ? Demo2 : Demo;
-    let Data_header1 = isdistrictselected ? <h3 className="card-title">
-        <i className="fas fa-text-width" />
-        Province 2 District Data
-      </h3>
-        :
-        <h3 className="card-title">
-            <i className="fas fa-text-width" />
-        Province 2 Data
-      </h3>
-    let Data_header2 = municipalityFinallychooosen ? <h3 className="card-title">
+    let Tont = municipalityFinallychooosen ? survey_Muni.length : isdistrictselected ? survey_Dist.length : Data.length;
+    let Wad = wardFinallychoosen ? survey_ward.length : '';
+
+    let Data_header_final = municipalityFinallychooosen ? <h3 className="card-title">
         <i className="fas fa-text-width" />
         Municipality Data
       </h3>
-        :
-        <h3 className="card-title">
+        : isdistrictselected ? <h3 className="card-title">
             <i className="fas fa-text-width" />
+        Province 2 District Data
+      </h3>
+            :
+            <h3 className="card-title">
+                <i className="fas fa-text-width" />
         Province 2 Data
       </h3>
-    let Data_header_final = municipalityFinallychooosen ? Data_header2 : Data_header1;
-
-
-    console.log("survey district>>>", survey_Dist);
-    console.log("testing>>>", isdistrictselected);
-    console.log("municipality>>>", ismunicipalityselected);
-    console.log("munitest>>>", municipalityFinallychooosen);
-    console.log("Municipality data>>>", survey_Muni);
-    console.log("Demo>>>", Demo);
-    console.log("Demo2>>>", Demo2);
-    console.log("Tooo>>>", To);
     return (
         <div>
             <div>
@@ -184,6 +135,8 @@ export default function Province2() {
                                                 setIsdistrictselected(false)
                                                 setMunicipalityFinallychoosen(false)
                                                 setIsmunicipalityselected(false)
+                                                setIsWardselected(false)
+                                                setWardFinallychoosen(false)
                                             }}>
                                                 <i className="far fa-circle nav-icon" />
                                                 <p>Province 2</p>
@@ -204,7 +157,6 @@ export default function Province2() {
                                                 </div >
                                                 : ''
                                             }
-
                                         </li>
                                         <li className="nav-item">
                                             <Link to="/bagmati" className="nav-link">
@@ -324,7 +276,7 @@ export default function Province2() {
                                                     <span className="info-box-text"><li>Total People not having Breathe Problem:<span><b>1216</b></span></li></span>
                                                     <span className="info-box-text"><li>Total People having Tiredness:<span><b>219</b></span></li></span>
                                                     <span className="info-box-text"><li>Total People not having Tiredness:<span><b>1022</b></span></li></span>
-                                                    <span className="info-box-text"><li>Total Family Members in COVID19 Survey:<span><b>1241</b></span></li></span>
+                                                    <span className="info-box-text"><li>Total Family Members inCOVID19 Survey:<span><b>1241</b></span></li></span>
 
                                                 </div>
 

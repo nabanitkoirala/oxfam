@@ -9,6 +9,8 @@ import Store from './oxfam data/Store';
 
 import Routing from './utils/Routing';
 import Map from './oxfam data/Mapbox';
+import Chart from './../src/oxfam data/Pages/Chart data/Chart';
+import Design from './Design';
 
 
 

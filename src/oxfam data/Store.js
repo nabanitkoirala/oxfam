@@ -10,7 +10,11 @@ export const isLoadingContext = React.createContext(true);
 export const survey_DistContext = React.createContext([]);
 export const survey_MuniContext = React.createContext([]);
 export const CovidContext = React.createContext([]);
-
+export const survey_ProvinceContext = React.createContext([]);
+export const survey_DistrictContext = React.createContext([]);
+export const isprovinceselectedContext = React.createContext(false);
+export const isdistrictselectedContext = React.createContext(false);
+export const isdistrictfinallychoosenContext = React.createContext(false);
 
 
 
@@ -1862,6 +1866,7 @@ const Store = ({ children }) => {
 
     ])
     const [Municipality] = useState([
+
         {
             "id": 1005,
             "bbox": [
@@ -4777,7 +4782,7 @@ const Store = ({ children }) => {
             },
             "title": "Hariwan",
             "title_en": "Hariwan",
-            "title_ne": "हरिपुर्वा",
+            "title_ne": "हरिवन",
             "type": "Municipality",
             "code": "haripurwamun",
             "order": 127,
@@ -37670,25 +37675,17 @@ const Store = ({ children }) => {
     const [Data, setData] = useState([]);
     const [Covid, setCovid] = useState([]);
     const [isloading, setIsloading] = useState(true);
+    const [survey_Province, setSurvey_Province] = useState([]);//if province is selected froom sidebar its value is changed and its total no of family from selected province
+    const [survey_District, setSurvey_District] = useState([]);//if district is selected froom sidebar its value is changed and its total no of family from selected district
+    const [isprovinceselected, setIsprovinceselected] = useState(false);
+    const [isdistrictselected, setIsdistrictselected] = useState(false);//When a province is selected it gives option to choose district.
+    const [isdistrictfinallychoosen, setIsdistrictfinallychoosen] = useState(false);//when a district is selected it helps to display value
+
 
     useEffect(() => {
         Axios.get('https://covid19wst.yilab.org.np/api/v1/form', { headers: { "Authorization": 'Token 44e2b23387334bcca310175463de768ee5c41743' } })
             .then(res => {
                 setData(res.data)
-
-
-            })
-            .catch(err => {
-                console.log(err);
-            })
-
-
-    }, [])
-    useEffect(() => {
-        Axios.get('https://bipad.yilab.org.np/api/v1/covid19-case/')
-            .then(res => {
-                setCovid(res.data.results)
-
                 setIsloading(false)
 
             })
@@ -37698,6 +37695,7 @@ const Store = ({ children }) => {
 
 
     }, [])
+
     return (
         <ProvinceContext.Provider value={[Province]}>
             <DistrictContext.Provider value={[District]}>
@@ -37706,7 +37704,14 @@ const Store = ({ children }) => {
                         <DataContext.Provider value={[Data, setData]}>
                             <CovidContext.Provider value={[Covid, setCovid]}>
                                 <isLoadingContext.Provider value={[isloading, setIsloading]}>
+
                                     {children}
+
+
+
+
+
+
                                 </isLoadingContext.Provider>
                             </CovidContext.Provider>
                         </DataContext.Provider>
